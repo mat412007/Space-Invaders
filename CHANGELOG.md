@@ -6,3 +6,4 @@
 - ### Creación del proyecto
 - ### Creación del README
 - ### Creación del CHANGELOG
+- ### Creación de la Wiki
