@@ -9,13 +9,15 @@ import com.badlogic.gdx.utils.ScreenUtils;
 public class Principal extends ApplicationAdapter {
     private SpriteBatch batch;
     private Texture image;
+    private Texture disparo;
     private Jugador jugador;
 
     @Override
     public void create() {
         batch = new SpriteBatch();
         image = new Texture("nave.png");
-        jugador = new Jugador(image);
+        disparo = new Texture("bala_2.png");
+        jugador = new Jugador(image, disparo);
     }
 
     @Override
