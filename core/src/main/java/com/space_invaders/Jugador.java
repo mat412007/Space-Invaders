@@ -24,6 +24,7 @@ public class Jugador {
         // Redimensionar la imagen directamente al cargarla
         float scaleFactor = 0.15f;  // Factor de escala para cambiar el tamaño
         sprite.setSize(sprite.getWidth() * scaleFactor, sprite.getHeight() * scaleFactor);
+        sprite_disparo.setSize(sprite.getWidth() * scaleFactor - 4, sprite.getHeight() * scaleFactor + 10);
 
         // Calcular la posición centrada
         x = (float) Gdx.graphics.getWidth() / 2 - (sprite.getWidth()) / 2;
@@ -51,8 +52,8 @@ public class Jugador {
 
         posicion_disparo.y += deltaTime*velocidad_disparo;
         if(Gdx.input.isButtonPressed(0)){
-            posicion_disparo.x = posicion.x +(sprite_disparo.getWidth()/4);
-            posicion_disparo.y = 0;
+            posicion_disparo.x = posicion.x + sprite.getWidth()/2 - sprite_disparo.getWidth()/2;// +(sprite_disparo.getWidth()/4);
+            posicion_disparo.y = 15 + sprite.getHeight();
         }
     }
 
