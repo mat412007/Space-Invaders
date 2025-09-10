@@ -35,6 +35,11 @@ public class Jugador {
         if(Gdx.input.isKeyPressed(Keys.D)){
             posicion.x += deltaTime * velocidad;
         }
+        if(posicion.x <= 0){
+            posicion.x = 0;
+        } else if(posicion.x >= Gdx.graphics.getWidth()-sprite.getWidth()){
+            posicion.x = Gdx.graphics.getWidth()-sprite.getWidth();
+        }
     }
 
     // Metodo para dibujar la nave en la posicion actualizada
