@@ -15,7 +15,7 @@ public class Jugador {
     public Sprite sprite;
     public Sprite sprite_disparo;
     public float velocidad = 350;
-    public float velocidad_disparo = 1000;
+    public float velocidad_disparo = 1300;
 
     public Jugador(Texture img_nave, Texture img_disparo){
         sprite = new Sprite(img_nave);
