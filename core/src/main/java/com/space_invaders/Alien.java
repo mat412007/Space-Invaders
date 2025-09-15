@@ -1,5 +1,6 @@
 package com.space_invaders;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -9,8 +10,9 @@ public class Alien {
     public Vector2 posicion;
     public Sprite sprite;
 
-    public Alien(Vector2 posicion, Texture image){
+    public Alien(Vector2 posicion, Texture image, Color color){
         sprite = new Sprite(image);
+        sprite.setColor(color);
         sprite.setSize(image.getWidth()*0.15f, image.getHeight()*0.15f);
         this.posicion = posicion;
     }
