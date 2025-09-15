@@ -24,7 +24,7 @@ public class Jugador {
         // Redimensionar la imagen directamente al cargarla
         float scaleFactor = 0.15f;  // Factor de escala para cambiar el tamaño
         sprite.setSize(sprite.getWidth() * scaleFactor, sprite.getHeight() * scaleFactor);
-        sprite_disparo.setSize(sprite.getWidth() * scaleFactor - 4, sprite.getHeight() * scaleFactor + 10);
+        sprite_disparo.setSize(sprite.getWidth() * scaleFactor - 2.5f, sprite.getHeight() * scaleFactor + 10);
 
         // Calcular la posición centrada
         x = (float) Gdx.graphics.getWidth() / 2 - (sprite.getWidth()) / 2;

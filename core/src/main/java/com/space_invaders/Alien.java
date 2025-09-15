@@ -8,12 +8,11 @@ import com.badlogic.gdx.math.Vector2;
 public class Alien {
     public Vector2 posicion;
     public Sprite sprite;
-    private int x;
-    private int y;
 
-    public Alien(Texture image){
+    public Alien(Vector2 posicion, Texture image){
         sprite = new Sprite(image);
-        posicion = new Vector2(x, y);
+        sprite.setSize(image.getWidth()*0.15f, image.getHeight()*0.15f);
+        this.posicion = posicion;
     }
 
     public void Dibujar(SpriteBatch batch){
