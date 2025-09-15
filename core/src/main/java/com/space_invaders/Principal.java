@@ -32,10 +32,10 @@ public class Principal extends ApplicationAdapter {
         int i = 0;
         for (int x = 0; x < altoAliens; x++) {
             for (int y = 0; y < anchoAliens; y++) {
-                // Vector2 posicionAlien = new Vector2(50 + y * espacioAliens, 300 + x * espacioAliens - 200);
-                Vector2 posicionAlien = new Vector2(Gdx.graphics.getWidth()/2f - alien.getWidth()/2f, Gdx.graphics.getHeight()/2f);
-                System.out.println(Gdx.graphics.getWidth() + "\n" + Gdx.graphics.getHeight());
-                System.out.println(alien.getWidth() + "\n" + alien.getHeight());
+                float a = Gdx.graphics.getWidth() / 2f - alien.getWidth() * 0.15f / 2;
+                float b = Gdx.graphics.getHeight() / 2f - alien.getHeight() * 0.15f / 2;
+                Vector2 posicionAlien = new Vector2(a, b);
+
                 aliens[i] = new Alien(posicionAlien, alien);
                 i++;
             }
