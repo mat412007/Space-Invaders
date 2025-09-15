@@ -8,7 +8,6 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.ScreenUtils;
 
-/** {@link com.badlogic.gdx.ApplicationListener} implementation shared by all platforms. */
 public class Principal extends ApplicationAdapter {
     private SpriteBatch batch;
     private Texture image;
@@ -33,10 +32,6 @@ public class Principal extends ApplicationAdapter {
         int i = 0;
         for (int x = 0; x < altoAliens; x++) {
             for (int y = 0; y < anchoAliens; y++) {
-                /*float a = Gdx.graphics.getWidth() / 2f - alien.getWidth() * 0.15f / 2;
-                float b = Gdx.graphics.getHeight() / 2f - alien.getHeight() * 0.15f / 2;
-                Vector2 posicionAlien = new Vector2(a, b);*/
-
                 Vector2 posicionAlien = new Vector2(y*espacioAliens, x*espacioAliens);
                 posicionAlien.x += Gdx.graphics.getWidth()/2f;
                 posicionAlien.y += Gdx.graphics.getHeight();
@@ -54,8 +49,17 @@ public class Principal extends ApplicationAdapter {
         ScreenUtils.clear(0f, 0f, 0f, 0f); // Color del fondo de pantalla
         batch.begin();
         jugador.Dibujar(batch);
-        for (Alien value : aliens) {
-            value.Dibujar(batch);
+
+        for (Alien alien : aliens) {
+            // Verificar si la bala colisiona con cada alien
+            if (alien.colisionConBala(jugador.sprite_disparo) && alien.alive) {
+                jugador.posicion_disparo.y = 10000;
+                alien.alive = false;  // Destruir el alien si hay colisión
+                break;
+            }
+        }
+        for(Alien alien: aliens){
+            alien.Dibujar(batch);  // Dibujar el alien si está vivo
         }
         batch.end();
     }
