@@ -24,7 +24,7 @@ public class Jugador2 {
         // Redimensionar la imagen directamente al cargarla
         float scaleFactor = 0.046875f;  // Factor de escala para cambiar el tamaño
         sprite.setSize(sprite.getWidth() * scaleFactor, sprite.getHeight() * scaleFactor);
-        sprite_disparo.setSize(sprite.getWidth() * scaleFactor - 2.5f, sprite.getHeight() * scaleFactor + 10);
+        sprite_disparo.setSize(sprite.getWidth() * 0.15f - 2.5f, sprite.getHeight() * 0.15f + 10);
 
         // Calcular la posición centrada
         x = (float) Gdx.graphics.getWidth() / 2 - sprite.getWidth() / 2;
@@ -37,11 +37,11 @@ public class Jugador2 {
     // Metodo para actualizar la posición de la nave
     public void Actualizar(float deltaTime){
         // Teclas para el movimiento
-        if(Gdx.input.isKeyPressed(Keys.A)){
-            posicion.x -= deltaTime * velocidad;
+        if(Gdx.input.isKeyPressed(Keys.LEFT)) {
+            posicion.x -= deltaTime * velocidad; // mover a la izquierda
         }
-        if(Gdx.input.isKeyPressed(Keys.D)){
-            posicion.x += deltaTime * velocidad;
+        if(Gdx.input.isKeyPressed(Keys.RIGHT)) {
+            posicion.x += deltaTime * velocidad; // mover a la derecha
         }
         // Para que la nave no se salga de los limites
         if(posicion.x <= 0){
