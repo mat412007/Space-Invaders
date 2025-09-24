@@ -7,7 +7,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 
-public class Jugador {
+public class Jugador2 {
     private float x;
     private float y;
     public Vector2 posicion;
@@ -17,18 +17,18 @@ public class Jugador {
     public float velocidad = 350;
     public float velocidad_disparo = 1300;
 
-    public Jugador(Texture img_nave, Texture img_disparo){
+    public Jugador2(Texture img_nave, Texture img_disparo){
         sprite = new Sprite(img_nave);
         sprite_disparo = new Sprite(img_disparo);
 
         // Redimensionar la imagen directamente al cargarla
-        float scaleFactor = 0.15f;  // Factor de escala para cambiar el tamaño
+        float scaleFactor = 0.046875f;  // Factor de escala para cambiar el tamaño
         sprite.setSize(sprite.getWidth() * scaleFactor, sprite.getHeight() * scaleFactor);
         sprite_disparo.setSize(sprite.getWidth() * scaleFactor - 2.5f, sprite.getHeight() * scaleFactor + 10);
 
         // Calcular la posición centrada
         x = (float) Gdx.graphics.getWidth() / 2 - sprite.getWidth() / 2;
-        y = sprite.getHeight() + 20;
+        y = 10;
         posicion = new Vector2(x, y);
         System.out.println(sprite.getWidth() + " : " + sprite.getHeight());
         posicion_disparo = new Vector2(0, 10000);

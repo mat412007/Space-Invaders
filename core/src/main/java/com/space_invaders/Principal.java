@@ -11,24 +11,28 @@ import com.badlogic.gdx.utils.ScreenUtils;
 
 public class Principal extends ApplicationAdapter {
     private SpriteBatch batch;
-    private Texture image;
+    private Texture nave;
+    private Texture nave_2;
     private Texture disparo;
     private Texture alien;
     private Jugador jugador;
+    private Jugador2 jugador_2;
     Alien[] aliens;
 
     @Override
     public void create() {
         batch = new SpriteBatch();
-        image = new Texture("nave.png");
+        nave = new Texture("nave.png");
+        nave_2 = new Texture("nave_2.png");
         disparo = new Texture("bala_2.png");
         alien = new Texture("alien_1.png");
-        jugador = new Jugador(image, disparo);
+        jugador = new Jugador(nave, disparo);
+        jugador_2 = new Jugador2(nave_2, disparo);
 
         int anchoAliens = 7;  // cantidad por fila
         int altoAliens = 4;   // cantidad de filas
         int espacioAliens = 75;
-        aliens = new Alien[anchoAliens * altoAliens];
+        aliens = new Alien[anchoAliens * altoAliens]; // Array con los aliens
 
         int i = 0;
         for (int x = 0; x < altoAliens; x++) {
@@ -50,6 +54,7 @@ public class Principal extends ApplicationAdapter {
         ScreenUtils.clear(0f, 0f, 0f, 0f); // Color del fondo de pantalla
         batch.begin();
         jugador.Dibujar(batch);
+        jugador_2.Dibujar(batch);
 
         // Comprobar la colisión con los aliens
         for (Alien alien : aliens) {
@@ -73,6 +78,7 @@ public class Principal extends ApplicationAdapter {
     @Override
     public void dispose() {
         batch.dispose();
-        image.dispose();// No olvides liberar la fuente
+        nave.dispose();
+        nave_2.dispose(); // No olvides liberar la fuente
     }
 }
