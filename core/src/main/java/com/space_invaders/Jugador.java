@@ -27,8 +27,8 @@ public class Jugador {
         sprite_disparo.setSize(sprite.getWidth() * scaleFactor - 2.5f, sprite.getHeight() * scaleFactor + 10);
 
         // Calcular la posición centrada
-        x = (float) Gdx.graphics.getWidth() / 2 - sprite.getWidth() / 2;
-        y = sprite.getHeight() + 20;
+        x = (float) Gdx.graphics.getWidth() / 2 - sprite.getWidth() / 2 - sprite.getWidth();
+        y = 10;
         posicion = new Vector2(x, y);
         System.out.println(sprite.getWidth() + " : " + sprite.getHeight());
         posicion_disparo = new Vector2(0, 10000);
@@ -53,7 +53,7 @@ public class Jugador {
         posicion_disparo.y += deltaTime*velocidad_disparo;
         if(Gdx.input.isKeyPressed(Keys.W) && posicion_disparo.y >= Gdx.graphics.getHeight()){
             posicion_disparo.x = posicion.x + sprite.getWidth()/2 - sprite_disparo.getWidth()/2;// +(sprite_disparo.getWidth()/4);
-            posicion_disparo.y = 10 + sprite.getHeight();
+            posicion_disparo.y = posicion.y + sprite.getHeight();
         }
     }
 
