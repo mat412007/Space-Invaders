@@ -62,6 +62,10 @@ public class Principal extends ApplicationAdapter {
                 jugador.posicion_disparo.y = 10000;  // Desplazar la bala fuera de la pantalla
                 alien.alive = false;  // Destruir el alien
             }
+            if (alien.colisionConBala(jugador_2.sprite_disparo) && alien.alive) {
+                jugador_2.posicion_disparo.y = 10000;  // Desplazar la bala fuera de la pantalla
+                alien.alive = false;  // Destruir el alien
+            }
         }
 
         // Dibujar solo los aliens vivos
