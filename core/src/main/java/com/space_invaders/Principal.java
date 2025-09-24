@@ -33,20 +33,7 @@ public class Principal extends ApplicationAdapter {
         int altoAliens = 4;   // cantidad de filas
         int espacioAliens = 75;
         aliens = new Alien[anchoAliens * altoAliens]; // Array con los aliens
-
-        int i = 0;
-        for (int x = 0; x < altoAliens; x++) {
-            for (int y = 0; y < anchoAliens; y++) {
-                Vector2 posicionAlien = new Vector2(y * espacioAliens, x * espacioAliens);
-                posicionAlien.x += Gdx.graphics.getWidth() / 2f;
-                posicionAlien.y += Gdx.graphics.getHeight();
-                posicionAlien.x -= (anchoAliens / 2f) * espacioAliens;
-                posicionAlien.y -= altoAliens * espacioAliens;
-
-                aliens[i] = new Alien(posicionAlien, alien, Color.GREEN);
-                i++;
-            }
-        }
+        Alien.llenar(altoAliens, anchoAliens, aliens, espacioAliens, alien); // Inserto los aliens en el array
     }
 
     @Override
@@ -68,12 +55,8 @@ public class Principal extends ApplicationAdapter {
             }
         }
 
-        // Dibujar solo los aliens vivos
-        for (Alien alien : aliens) {
-            if (alien.alive) {
-                alien.Dibujar(batch);  // Dibujar el alien si está vivo
-            }
-        }
+        // Dibujo a los aliens
+        Alien.Dibujar(batch, aliens);
 
         // Mostrar el puntaje en la esquina superior izquierda
         batch.end();

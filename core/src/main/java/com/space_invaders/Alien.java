@@ -1,5 +1,6 @@
 package com.space_invaders;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -19,10 +20,12 @@ public class Alien {
         this.alive = true;  // Se inicializa como vivo
     }
 
-    public void Dibujar(SpriteBatch batch){
-        if (alive) {  // Solo se dibuja si está vivo
-            sprite.setPosition(posicion.x, posicion.y);
-            sprite.draw(batch);
+    public static void Dibujar(SpriteBatch batch, Alien aliens[]){
+        for(Alien alien: aliens){
+            if(alien.alive){
+                alien.sprite.setPosition(alien.posicion.x, alien.posicion.y);
+                alien.sprite.draw(batch);
+            }
         }
     }
 
@@ -30,4 +33,21 @@ public class Alien {
     public boolean colisionConBala(Sprite spriteBala) {
         return sprite.getBoundingRectangle().overlaps(spriteBala.getBoundingRectangle());
     }
+
+    public static void llenar(int alto, int ancho, Alien aliens[], int espacio, Texture alien_img){
+        int i = 0;
+        for (int x = 0; x < alto; x++) {
+            for (int y = 0; y < ancho; y++) {
+                Vector2 posicionAlien = new Vector2(y * espacio, x * espacio);
+                posicionAlien.x += Gdx.graphics.getWidth() / 2f;
+                posicionAlien.y += Gdx.graphics.getHeight();
+                posicionAlien.x -= (ancho / 2f) * espacio;
+                posicionAlien.y -= alto * espacio;
+
+                aliens[i] = new Alien(posicionAlien, alien_img, Color.GREEN);
+                i++;
+            }
+        }
+    }
+
 }

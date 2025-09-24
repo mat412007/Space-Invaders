@@ -51,7 +51,7 @@ public class Jugador {
         }
 
         posicion_disparo.y += deltaTime*velocidad_disparo;
-        if(Gdx.input.isKeyPressed(Keys.S) && posicion_disparo.y >= Gdx.graphics.getHeight()){
+        if(Gdx.input.isKeyPressed(Keys.W) && posicion_disparo.y >= Gdx.graphics.getHeight()){
             posicion_disparo.x = posicion.x + sprite.getWidth()/2 - sprite_disparo.getWidth()/2;// +(sprite_disparo.getWidth()/4);
             posicion_disparo.y = 10 + sprite.getHeight();
         }
