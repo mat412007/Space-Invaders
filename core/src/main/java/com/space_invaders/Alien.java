@@ -20,7 +20,7 @@ public class Alien {
         this.alive = true;  // Se inicializa como vivo
     }
 
-    public static void Dibujar(SpriteBatch batch, Alien aliens[]){
+    public static void Dibujar(SpriteBatch batch, Alien[] aliens){
         for(Alien alien: aliens){
             if(alien.alive){
                 alien.sprite.setPosition(alien.posicion.x, alien.posicion.y);
@@ -34,7 +34,7 @@ public class Alien {
         return sprite.getBoundingRectangle().overlaps(spriteBala.getBoundingRectangle());
     }
 
-    public static void llenar(int alto, int ancho, Alien aliens[], int espacio, Texture alien_img){
+    public static void llenar(int alto, int ancho, Alien[] aliens, int espacio, Texture alien_img){
         int i = 0;
         for (int x = 0; x < alto; x++) {
             for (int y = 0; y < ancho; y++) {
