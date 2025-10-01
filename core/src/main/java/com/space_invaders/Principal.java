@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.ScreenUtils;
 
@@ -56,10 +57,15 @@ public class Principal extends ApplicationAdapter {
         }
 
         // Dibujo a los aliens
-        Alien.Dibujar(batch, aliens);
+        for (Alien alien : aliens) {
+            alien.Dibujar(batch);
+        }
 
         // Mostrar el puntaje en la esquina superior izquierda
         batch.end();
+
+        //Linea.dibujar(120, 0, 120, Gdx.graphics.getHeight());
+        //Linea.dibujar(Gdx.graphics.getWidth()-120, 0, Gdx.graphics.getWidth()-120, Gdx.graphics.getHeight());
     }
 
     @Override

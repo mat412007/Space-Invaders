@@ -20,12 +20,18 @@ public class Alien {
         this.alive = true;  // Se inicializa como vivo
     }
 
-    public static void Dibujar(SpriteBatch batch, Alien[] aliens){
-        for(Alien alien: aliens){
-            if(alien.alive){
-                alien.sprite.setPosition(alien.posicion.x, alien.posicion.y);
-                alien.sprite.draw(batch);
-            }
+    public void Actualizar(float deltaTime){
+        int velocidadHorizontal = 800;
+        int velocidadVertical = 1200;
+
+
+    }
+
+    public void Dibujar(SpriteBatch batch){
+        if(alive){
+            Actualizar(Gdx.graphics.getDeltaTime());
+            this.sprite.setPosition(posicion.x, posicion.y);
+            this.sprite.draw(batch);
         }
     }
 
@@ -49,5 +55,4 @@ public class Alien {
             }
         }
     }
-
 }
