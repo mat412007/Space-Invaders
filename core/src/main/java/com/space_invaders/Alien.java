@@ -13,23 +13,15 @@ public class Alien {
     public Sprite sprite;
 
     public Alien(Vector2 posicion, Texture image, Color color){
-        sprite = new Sprite(image);
+        this.sprite = new Sprite(image);
         sprite.setColor(color);
         sprite.setSize(image.getWidth()*0.15f, image.getHeight()*0.15f);
         this.posicion = posicion;
         this.alive = true;  // Se inicializa como vivo
     }
 
-    public void Actualizar(float deltaTime){
-        int velocidadHorizontal = 800;
-        int velocidadVertical = 1200;
-
-
-    }
-
     public void Dibujar(SpriteBatch batch){
         if(alive){
-            Actualizar(Gdx.graphics.getDeltaTime());
             this.sprite.setPosition(posicion.x, posicion.y);
             this.sprite.draw(batch);
         }

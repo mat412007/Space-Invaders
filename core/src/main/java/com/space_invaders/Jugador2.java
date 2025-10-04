@@ -34,7 +34,7 @@ public class Jugador2 {
         posicion_disparo = new Vector2(0, 10000);
     }
 
-    // Metodo para actualizar la posición de la nave
+    // Método para actualizar la posición de la nave
     public void Actualizar(float deltaTime){
         // Teclas para el movimiento
         if(Gdx.input.isKeyPressed(Keys.LEFT)) {
@@ -43,7 +43,7 @@ public class Jugador2 {
         if(Gdx.input.isKeyPressed(Keys.RIGHT)) {
             posicion.x += deltaTime * velocidad; // mover a la derecha
         }
-        // Para que la nave no se salga de los limites
+        // Para que la nave no se salga de los límites
         if(posicion.x <= 0){
             posicion.x = 0;
         } else if(posicion.x >= Gdx.graphics.getWidth()-sprite.getWidth()){

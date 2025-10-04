@@ -30,7 +30,6 @@ public class Jugador {
         x = (float) Gdx.graphics.getWidth() / 2 - sprite.getWidth() / 2 - sprite.getWidth();
         y = 10;
         posicion = new Vector2(x, y);
-        System.out.println(sprite.getWidth() + " : " + sprite.getHeight());
         posicion_disparo = new Vector2(0, 10000);
     }
 
@@ -44,7 +43,7 @@ public class Jugador {
             posicion.x += deltaTime * velocidad;
         }
         // Para que la nave no se salga de los limites
-        if(posicion.x <= 0){
+        if(posicion.x < 0){
             posicion.x = 0;
         } else if(posicion.x >= Gdx.graphics.getWidth()-sprite.getWidth()){
             posicion.x = Gdx.graphics.getWidth()-sprite.getWidth();

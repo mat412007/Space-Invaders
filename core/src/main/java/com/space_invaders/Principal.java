@@ -18,7 +18,7 @@ public class Principal extends ApplicationAdapter {
     private Texture alien;
     private Jugador jugador;
     private Jugador2 jugador_2;
-    Alien[] aliens;
+    AlienManager alienManager;
 
     @Override
     public void create() {
@@ -32,20 +32,25 @@ public class Principal extends ApplicationAdapter {
 
         int anchoAliens = 7;  // cantidad por fila
         int altoAliens = 4;   // cantidad de filas
-        int espacioAliens = 75;
-        aliens = new Alien[anchoAliens * altoAliens]; // Array con los aliens
-        Alien.llenar(altoAliens, anchoAliens, aliens, espacioAliens, alien); // Inserto los aliens en el array
+        int espacioAliens = 80;
+        alienManager = new AlienManager(altoAliens, anchoAliens, espacioAliens, alien);
     }
 
     @Override
     public void render() {
         ScreenUtils.clear(0f, 0f, 0f, 0f); // Color del fondo de pantalla
+
+        // --- Actualizar la lógica del juego ---
+        float deltaTime = Gdx.graphics.getDeltaTime();
+        alienManager.ActualizarMovimiento(deltaTime);
+        // ------------------------------------
+
         batch.begin();
         jugador.Dibujar(batch);
         jugador_2.Dibujar(batch);
 
         // Comprobar la colisión con los aliens
-        for (Alien alien : aliens) {
+        for (Alien alien : alienManager.getAliens()) {
             if (alien.colisionConBala(jugador.sprite_disparo) && alien.alive) {
                 jugador.posicion_disparo.y = 10000;  // Desplazar la bala fuera de la pantalla
                 alien.alive = false;  // Destruir el alien
@@ -57,9 +62,7 @@ public class Principal extends ApplicationAdapter {
         }
 
         // Dibujo a los aliens
-        for (Alien alien : aliens) {
-            alien.Dibujar(batch);
-        }
+        alienManager.Dibujar(batch);
 
         // Mostrar el puntaje en la esquina superior izquierda
         batch.end();
