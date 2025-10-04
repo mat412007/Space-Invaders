@@ -35,10 +35,11 @@ public class Jugador {
 
     // Metodo para actualizar la posición de la nave
     public void Actualizar(float deltaTime){
-        // Teclas para el movimiento
+        // Mover a la izquierda
         if(Gdx.input.isKeyPressed(Keys.A)){
             posicion.x -= deltaTime * velocidad;
         }
+        // Mover a la derecha
         if(Gdx.input.isKeyPressed(Keys.D)){
             posicion.x += deltaTime * velocidad;
         }
@@ -50,8 +51,9 @@ public class Jugador {
         }
 
         posicion_disparo.y += deltaTime*velocidad_disparo;
+        // Accion de disparar
         if(Gdx.input.isKeyPressed(Keys.W) && posicion_disparo.y >= Gdx.graphics.getHeight()){
-            posicion_disparo.x = posicion.x + sprite.getWidth()/2 - sprite_disparo.getWidth()/2;// +(sprite_disparo.getWidth()/4);
+            posicion_disparo.x = posicion.x + sprite.getWidth()/2 - sprite_disparo.getWidth()/2; // Centrar el disparo en la nave
             posicion_disparo.y = posicion.y + sprite.getHeight();
         }
     }

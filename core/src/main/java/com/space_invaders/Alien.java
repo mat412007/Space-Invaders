@@ -32,6 +32,7 @@ public class Alien {
         return sprite.getBoundingRectangle().overlaps(spriteBala.getBoundingRectangle());
     }
 
+    // llenar el array de los aliens
     public static void llenar(int alto, int ancho, Alien[] aliens, int espacio, Texture alien_img){
         int i = 0;
         for (int x = 0; x < alto; x++) {
@@ -41,7 +42,6 @@ public class Alien {
                 posicionAlien.y += Gdx.graphics.getHeight();
                 posicionAlien.x -= (ancho / 2f) * espacio;
                 posicionAlien.y -= alto * espacio;
-
                 aliens[i] = new Alien(posicionAlien, alien_img, Color.GREEN);
                 i++;
             }
