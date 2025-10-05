@@ -1,20 +1,20 @@
 package com.space_invaders;
 
-import com.badlogic.gdx.Game; // Importamos la clase Game
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
-// 'MyGame' extiende Game, que es la forma correcta de manejar pantallas.
+// Extendiendo Game es la forma correcta de manejar pantallas.
 public class MyGame extends Game {
 
     private SpriteBatch batch;
 
     @Override
     public void create() {
+        // Contiene recursos comunes para que las clases que lo necesitan lo compartan
         batch = new SpriteBatch();
 
-        // 1. Cargamos la pantalla inicial (GameScreen)
-        // Le pasamos 'this' (una referencia a MyGame) para que GameScreen pueda acceder al batch y cambiar de pantalla.
-        setScreen(new MenuScreen(this));
+        //Cargamos la pantalla inicial
+        setScreen(new MenuScreen(this)); // this hace referencia a MyGame
     }
 
     public SpriteBatch getBatch() {
