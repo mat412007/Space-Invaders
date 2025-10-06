@@ -28,9 +28,4 @@ public class Alien {
             this.sprite.draw(batch);
         }
     }
-
-    // Metodo para verificar la colisión con una bala
-    public boolean colisionConBala(Sprite spriteBala) {
-        return sprite.getBoundingRectangle().overlaps(spriteBala.getBoundingRectangle());
-    }
 }

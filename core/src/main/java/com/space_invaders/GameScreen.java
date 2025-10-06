@@ -31,7 +31,6 @@ public class GameScreen implements Screen {
         alien = new Texture("alien_1.png");
         jugador = new Jugador(nave, disparo);
         jugador_2 = new Jugador2(nave_2, disparo);
-
         int anchoAliens = 7;
         int altoAliens = 4;
         int espacioAliens = 80;
@@ -50,6 +49,13 @@ public class GameScreen implements Screen {
         jugador.Dibujar(game.getBatch());
         jugador_2.Dibujar(game.getBatch());
 
+        if (alienManager.colisionConBala(jugador.sprite_disparo)) {
+            jugador.posicion_disparo.y = 10000;
+        }
+        if (alienManager.colisionConBala(jugador_2.sprite_disparo)) {
+            jugador_2.posicion_disparo.y = 10000;
+        }
+
         for (Alien alien : alienManager.getAliens()) {
             // Si los aliens tocan a cualquier jugador, ambos pierden
             if(alien.sprite.getBoundingRectangle().overlaps(jugador.sprite.getBoundingRectangle()) ||
@@ -57,14 +63,6 @@ public class GameScreen implements Screen {
                 game.setScreen(new MenuScreen(game));
             }
             // Los disparos de cualquier jugador matan a los aliens y sacan el disparo de la pantalla
-            if (alien.colisionConBala(jugador.sprite_disparo) && alien.alive) {
-                jugador.posicion_disparo.y = 10000;
-                alien.alive = false;
-            }
-            if (alien.colisionConBala(jugador_2.sprite_disparo) && alien.alive) {
-                jugador_2.posicion_disparo.y = 10000;
-                alien.alive = false;
-            }
             alien.Dibujar(game.getBatch());
         }
         game.getBatch().end();

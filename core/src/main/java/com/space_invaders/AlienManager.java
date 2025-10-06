@@ -3,6 +3,7 @@ package com.space_invaders;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Rectangle;
@@ -10,6 +11,8 @@ import com.badlogic.gdx.math.Vector2;
 
 public class AlienManager {
     private Alien[] aliens;
+    private int aliensRestantes;
+
     private float alienMoveDirectionHorizontal = 1f;
     private float alienMoveDirectionVertical = 1f;
     private final float alienHorizontalSpeed = 250f;
@@ -22,6 +25,7 @@ public class AlienManager {
     public AlienManager(int alto, int ancho, int espacio, Texture alien_img) {
         aliens = new Alien[ancho * alto];
         llenar(alto, ancho, aliens, espacio, alien_img);
+        aliensRestantes = getAliens().length;
     }
 
     public Alien[] getAliens() {
@@ -133,6 +137,17 @@ public class AlienManager {
                 i++;
             }
         }
+    }
+
+    // Verificar el impacto de la bala con el alien
+    public boolean colisionConBala(Sprite spriteBala) {
+        for(Alien alien : aliens){
+            if(alien.sprite.getBoundingRectangle().overlaps(spriteBala.getBoundingRectangle()) && alien.alive){
+                alien.alive = false;
+                return true;
+            }
+        }
+        return false;
     }
 
     public void Dibujar(SpriteBatch batch) {
