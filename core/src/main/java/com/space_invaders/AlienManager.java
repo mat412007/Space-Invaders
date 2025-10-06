@@ -1,22 +1,24 @@
 package com.space_invaders;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Vector2;
 
 public class AlienManager {
     private Alien[] aliens;
-    private float alienMoveDirection = 1.0f;
-    private final float alienHorizontalSpeed = 100.0f;
+    private float alienMoveDirection = 1f;
+    private final float alienHorizontalSpeed = 150f;
 
     // Variables para el descenso fluido
-    private final float alienTotalDropDistance = 25.0f;
-    private final float alienVerticalSpeed = 50.0f;
-    private float currentDropDistance = 0.0f; // Inicialmente 0.0f (sin descenso activo)
+    private final float alienTotalDropDistance = 25f;
+    private final float alienVerticalSpeed = 50f;
+    private float currentDropDistance = 0f; // Distancia recorrida entre bajadas
 
     public AlienManager(int alto, int ancho, int espacio, Texture alien_img) {
         aliens = new Alien[ancho * alto];
-        Alien.llenar(alto, ancho, aliens, espacio, alien_img);
+        llenar(alto, ancho, aliens, espacio, alien_img);
     }
 
     public Alien[] getAliens() {
@@ -25,12 +27,10 @@ public class AlienManager {
 
     public void ActualizarMovimiento(float deltaTime) {
 
-        // --- 0. LÓGICA DE DESCENSO FLUIDO (Prioridad) ---
         // Si ya hay una distancia de descenso pendiente, aplicarla primero
-        if (currentDropDistance > 0.0f && currentDropDistance < alienTotalDropDistance) {
+        if (currentDropDistance > 0f && currentDropDistance < alienTotalDropDistance) {
 
             float descensoEnEsteFrame = alienVerticalSpeed * deltaTime;
-
             // Limita el descenso
             if (currentDropDistance + descensoEnEsteFrame > alienTotalDropDistance) {
                 descensoEnEsteFrame = alienTotalDropDistance - currentDropDistance;
@@ -55,7 +55,6 @@ public class AlienManager {
         }
 
         // --- Si el descenso está inactivo o acaba de terminar, movemos horizontalmente ---
-
         float minX = Float.MAX_VALUE;
         float maxX = Float.MIN_VALUE;
         boolean hayAliensVivos = false;
@@ -86,13 +85,12 @@ public class AlienManager {
 
         // 3. Aplicar movimiento
         if (tocaBorde) {
-            // SI toca el borde, INICIAMOS el descenso, y el movimiento horizontal
-            // se detendrá automáticamente en el siguiente frame debido al 'return'
+            // SI toca el borde, inciamos el descenso, y el movimiento horizontal se detendrá
             currentDropDistance = 0.001f;
         }
 
-        // Si tocaBorde es false, o si el descenso acaba de terminar (currentDropDistance==0.0f),
-        // APLICAMOS MOVIMIENTO HORIZONTAL
+
+        // Si no tocamos el borde, nos movemos horizontalmente
         if (!tocaBorde) {
             float movimientoHorizontal = alienHorizontalSpeed * alienMoveDirection * deltaTime;
 
@@ -101,6 +99,21 @@ public class AlienManager {
                     alien.posicion.x += movimientoHorizontal;
                     alien.sprite.setPosition(alien.posicion.x, alien.posicion.y);
                 }
+            }
+        }
+    }
+
+    public static void llenar(int alto, int ancho, Alien[] aliens, int espacio, Texture alien_img){
+        int i = 0;
+        for (int x = 0; x < alto; x++) {
+            for (int y = 0; y < ancho; y++) {
+                Vector2 posicionAlien = new Vector2(y * espacio, x * espacio);
+                posicionAlien.x += Gdx.graphics.getWidth() / 2f;
+                posicionAlien.y += Gdx.graphics.getHeight();
+                posicionAlien.x -= (ancho / 2f) * espacio;
+                posicionAlien.y -= alto * espacio;
+                aliens[i] = new Alien(posicionAlien, alien_img, Color.GREEN);
+                i++;
             }
         }
     }

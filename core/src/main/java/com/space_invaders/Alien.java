@@ -31,20 +31,4 @@ public class Alien {
     public boolean colisionConBala(Sprite spriteBala) {
         return sprite.getBoundingRectangle().overlaps(spriteBala.getBoundingRectangle());
     }
-
-    // llenar el array de los aliens
-    public static void llenar(int alto, int ancho, Alien[] aliens, int espacio, Texture alien_img){
-        int i = 0;
-        for (int x = 0; x < alto; x++) {
-            for (int y = 0; y < ancho; y++) {
-                Vector2 posicionAlien = new Vector2(y * espacio, x * espacio);
-                posicionAlien.x += Gdx.graphics.getWidth() / 2f;
-                posicionAlien.y += Gdx.graphics.getHeight();
-                posicionAlien.x -= (ancho / 2f) * espacio;
-                posicionAlien.y -= alto * espacio;
-                aliens[i] = new Alien(posicionAlien, alien_img, Color.GREEN);
-                i++;
-            }
-        }
-    }
 }

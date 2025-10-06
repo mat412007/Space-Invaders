@@ -34,21 +34,17 @@ public class MenuScreen implements Screen {
 
     @Override
     public void show() {
-        // 1. Cargar la Skin (apariencia de los botones)
-        // ¡Asegúrate de que "uiskin.json" exista en tu carpeta assets!
+        // Carga la Skin y la apariencia de los botones
         skin = new Skin(Gdx.files.internal("uiskin.json"));
 
-        // 2. Inicializar el Stage
-        // Al no especificar un Viewport, LibGDX usa uno por defecto que se actualiza con la pantalla.
         stage = new Stage();
 
         // 3. Establecer el Stage como el procesador de entrada
-        // ¡Esto es obligatorio para que los botones funcionen!
         Gdx.input.setInputProcessor(stage);
 
         // 4. Crear la Table y centrarla
-        table = new Table(skin); // Si la Skin tiene estilos para Table, úsala aquí.
-        table.setFillParent(true); // Hace que la Table ocupe todo el Stage (y, por lo tanto, toda la pantalla)
+        table = new Table(skin); // Integrar estilos de la skin
+        table.setFillParent(true); // Hace que la Table ocupe todo el Stage y pantalla
         stage.addActor(table);
 
         // 5. Crear y añadir los botones
@@ -62,27 +58,28 @@ public class MenuScreen implements Screen {
         TextButton botonSalir = new TextButton("SALIR", skin);
 
         // 2. Añadir los botones a la Table, uno debajo del otro
-        // El método .row() es clave para la disposición vertical.
-
         float anchoBoton = 300f; // Ancho fijo en píxeles
         float altoBoton = 80f; // Alto fijo en píxeles
-
+        // El método .row() es clave para la disposición vertical.
+        table.padTop(150); // Añade relleno a la parte de arriba de la tabla, y ayuda a centrar los botones
         table.add(botonJugar).width(anchoBoton).height(altoBoton).pad(15);
         table.row(); // Siguiente fila
-
         table.add(botonOpciones).width(anchoBoton).height(altoBoton).pad(15);
         table.row(); // Siguiente fila
-
         table.add(botonSalir).width(anchoBoton).height(altoBoton).pad(15);
 
         // 3. Añadir Listeners para las acciones
-
         botonJugar.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                // Acción: Navegar a la pantalla de juego
-                // game.setScreen(new GameScreen(game));
+                game.setScreen(new GameScreen(game));
                 Gdx.app.log("Menu", "JUGAR presionado");
+            }
+        });
+
+        botonOpciones.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
             }
         });
 

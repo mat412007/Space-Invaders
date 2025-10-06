@@ -46,6 +46,12 @@ public class GameScreen implements Screen {
         jugador_2.Dibujar(game.getBatch());
 
         for (Alien alien : alienManager.getAliens()) {
+            // Si los aliens tocan a cualquier jugador, ambos pierden
+            if(alien.sprite.getBoundingRectangle().overlaps(jugador.sprite.getBoundingRectangle()) ||
+                alien.sprite.getBoundingRectangle().overlaps(jugador_2.sprite.getBoundingRectangle())){
+                game.setScreen(new MenuScreen(game));
+            }
+            // Los disparos de cualquier jugador matan a los aliens y sacan el disparo de la pantalla
             if (alien.colisionConBala(jugador.sprite_disparo) && alien.alive) {
                 jugador.posicion_disparo.y = 10000;
                 alien.alive = false;
@@ -56,7 +62,6 @@ public class GameScreen implements Screen {
             }
             alien.Dibujar(game.getBatch());
         }
-
         game.getBatch().end();
     }
 
