@@ -55,17 +55,20 @@ public class MenuScreen implements Screen {
         // 1. Crear los TextButton
         TextButton botonJugar = new TextButton("JUGAR", skin);
         TextButton botonOpciones = new TextButton("OPCIONES", skin);
+        TextButton botonControles = new TextButton("CONTROLES", skin);
         TextButton botonSalir = new TextButton("SALIR", skin);
 
         // 2. Añadir los botones a la Table, uno debajo del otro
-        float anchoBoton = 300f; // Ancho fijo en píxeles
-        float altoBoton = 80f; // Alto fijo en píxeles
+        float anchoBoton = 200f; // Ancho fijo en píxeles
+        float altoBoton = 60f; // Alto fijo en píxeles
         // El método .row() es clave para la disposición vertical.
-        table.padTop(150); // Añade relleno a la parte de arriba de la tabla, y ayuda a centrar los botones
+        table.padTop(200); // Añade relleno a la parte de arriba de la tabla, y ayuda a centrar los botones
         table.add(botonJugar).width(anchoBoton).height(altoBoton).pad(15);
         table.row(); // Siguiente fila
         table.add(botonOpciones).width(anchoBoton).height(altoBoton).pad(15);
         table.row(); // Siguiente fila
+        table.add(botonControles).width(anchoBoton).height(altoBoton).pad(15);
+        table.row();
         table.add(botonSalir).width(anchoBoton).height(altoBoton).pad(15);
 
         // 3. Añadir Listeners para las acciones
