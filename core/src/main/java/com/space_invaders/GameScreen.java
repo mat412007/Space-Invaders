@@ -9,6 +9,7 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.ScreenUtils;
 
 import java.awt.*;
+import java.lang.management.MemoryUsage;
 
 // GameScreen implementa Screen
 public class GameScreen implements Screen {
@@ -48,6 +49,11 @@ public class GameScreen implements Screen {
 
         jugador.Dibujar(game.getBatch());
         jugador_2.Dibujar(game.getBatch());
+
+        if(alienManager.victoria()){
+            game.setScreen(new MenuScreen(game));
+            System.out.println("Has ganado\nQuedan 0 aliens");
+        }
 
         if (alienManager.colisionConBala(jugador.sprite_disparo)) {
             jugador.posicion_disparo.y = 10000;

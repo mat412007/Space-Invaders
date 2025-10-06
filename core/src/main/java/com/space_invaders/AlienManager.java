@@ -144,10 +144,15 @@ public class AlienManager {
         for(Alien alien : aliens){
             if(alien.sprite.getBoundingRectangle().overlaps(spriteBala.getBoundingRectangle()) && alien.alive){
                 alien.alive = false;
+                aliensRestantes--;
                 return true;
             }
         }
         return false;
+    }
+
+    public boolean victoria(){
+        return aliensRestantes == 0;
     }
 
     public void Dibujar(SpriteBatch batch) {
