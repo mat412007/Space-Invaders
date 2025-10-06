@@ -22,13 +22,10 @@ public class Alien {
         this.alive = true;  // Se inicializa como vivo
     }
 
-    public void Dibujar(SpriteBatch batch, ShapeRenderer shapeRenderer){
+    public void Dibujar(SpriteBatch batch){
         if(alive){
             this.sprite.setPosition(posicion.x, posicion.y);
             this.sprite.draw(batch);
-            Rectangle rect = sprite.getBoundingRectangle();
-            shapeRenderer.setColor(Color.GREEN);
-            shapeRenderer.rect(rect.x, rect.y, rect.width, rect.height);
         }
     }
 

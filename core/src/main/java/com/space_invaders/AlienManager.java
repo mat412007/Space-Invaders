@@ -136,10 +136,8 @@ public class AlienManager {
     }
 
     public void Dibujar(SpriteBatch batch) {
-        ShapeRenderer shapeRenderer = new ShapeRenderer();
         for (Alien alien : aliens) {
-            alien.Dibujar(batch, shapeRenderer);
+            alien.Dibujar(batch);
         }
-        shapeRenderer.end();
     }
 }
