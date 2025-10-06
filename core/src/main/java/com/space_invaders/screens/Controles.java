@@ -42,9 +42,9 @@ public class Controles implements Screen {
         jugador_2.setSize(100, 100);
         enemigo.setSize(100, 100);
 
-        posicion_1 = new Vector2(Gdx.graphics.getWidth()/3f, Gdx.graphics.getHeight()/3f);
-        posicion_2 = new Vector2(Gdx.graphics.getWidth()/4f, Gdx.graphics.getHeight()/4f);
-        posicionEnemigo = new Vector2(Gdx.graphics.getWidth()/5f, Gdx.graphics.getHeight()/5f);
+        posicion_1 = new Vector2(Gdx.graphics.getWidth()/3f, 600);
+        posicion_2 = new Vector2(Gdx.graphics.getWidth()/3f, 400);
+        posicionEnemigo = new Vector2(Gdx.graphics.getWidth()/3f, 200);
     }
 
     public void dibujarJugador1(SpriteBatch batch){
