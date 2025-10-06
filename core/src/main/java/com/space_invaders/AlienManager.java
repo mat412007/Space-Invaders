@@ -8,7 +8,8 @@ import com.badlogic.gdx.math.Vector2;
 
 public class AlienManager {
     private Alien[] aliens;
-    private float alienMoveDirection = 1f;
+    private float alienMoveDirectionHorizontal = 1f;
+    private float alienMoveDirectionVertical = 1f;
     private final float alienHorizontalSpeed = 150f;
 
     // Variables para el descenso fluido
@@ -27,10 +28,24 @@ public class AlienManager {
 
     public void ActualizarMovimiento(float deltaTime) {
 
+        boolean hayAliensVivos;
+
         // Si ya hay una distancia de descenso pendiente, aplicarla primero
         if (currentDropDistance > 0f && currentDropDistance < alienTotalDropDistance) {
 
             float descensoEnEsteFrame = alienVerticalSpeed * deltaTime;
+
+            /*float minY = Float.MAX_VALUE;
+            float maxY = Float.MIN_VALUE;
+            hayAliensVivos = false;
+            for (Alien alien : aliens) {
+                if (alien.alive) {
+                    hayAliensVivos = true;
+                    if (alien.sprite.getX() < minY) minY = alien.sprite.getX();
+                    if (alien.sprite.getX() > maxY) maxY = alien.sprite.getX();
+                }
+            }*/
+
             // Limita el descenso
             if (currentDropDistance + descensoEnEsteFrame > alienTotalDropDistance) {
                 descensoEnEsteFrame = alienTotalDropDistance - currentDropDistance;
@@ -57,7 +72,7 @@ public class AlienManager {
         // --- Si el descenso está inactivo o acaba de terminar, movemos horizontalmente ---
         float minX = Float.MAX_VALUE;
         float maxX = Float.MIN_VALUE;
-        boolean hayAliensVivos = false;
+        hayAliensVivos = false;
         boolean tocaBorde = false;
 
         // 1. Encontrar límites
@@ -75,11 +90,11 @@ public class AlienManager {
         float screenRight = Gdx.graphics.getWidth();
         float alienWidth = aliens[0].sprite.getWidth();
 
-        if (alienMoveDirection == 1.0f && (maxX + alienWidth) >= screenRight) {
-            alienMoveDirection = -1.0f; // Cambia a izquierda
+        if (alienMoveDirectionHorizontal == 1.0f && (maxX + alienWidth) >= screenRight) {
+            alienMoveDirectionHorizontal = -1.0f; // Cambia a izquierda
             tocaBorde = true;
-        } else if (alienMoveDirection == -1.0f && minX <= 0) {
-            alienMoveDirection = 1.0f; // Cambia a derecha
+        } else if (alienMoveDirectionHorizontal == -1.0f && minX <= 0) {
+            alienMoveDirectionHorizontal = 1.0f; // Cambia a derecha
             tocaBorde = true;
         }
 
@@ -92,7 +107,7 @@ public class AlienManager {
 
         // Si no tocamos el borde, nos movemos horizontalmente
         if (!tocaBorde) {
-            float movimientoHorizontal = alienHorizontalSpeed * alienMoveDirection * deltaTime;
+            float movimientoHorizontal = alienHorizontalSpeed * alienMoveDirectionHorizontal * deltaTime;
 
             for (Alien alien : aliens) {
                 if (alien.alive) {
