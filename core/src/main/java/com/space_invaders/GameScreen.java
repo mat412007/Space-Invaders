@@ -2,8 +2,13 @@ package com.space_invaders;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen; // Importamos la interfaz Screen
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.ScreenUtils;
+
+import java.awt.*;
 
 // GameScreen implementa Screen
 public class GameScreen implements Screen {
@@ -44,6 +49,14 @@ public class GameScreen implements Screen {
 
         jugador.Dibujar(game.getBatch());
         jugador_2.Dibujar(game.getBatch());
+        Rectangle rect = jugador.sprite.getBoundingRectangle();
+        Rectangle rect_2 = jugador_2.sprite.getBoundingRectangle();
+        ShapeRenderer shapeRenderer = new ShapeRenderer();
+        shapeRenderer.begin(ShapeRenderer.ShapeType.Line); // línea para que sea transparente dentro
+        shapeRenderer.setColor(Color.RED); // el color que quieras para el bounding rectangle
+        shapeRenderer.rect(rect.x, rect.y, rect.width, rect.height);
+        shapeRenderer.setColor(Color.GREEN);
+        shapeRenderer.rect(rect_2.x, rect_2.y, rect_2.width, rect_2.height);
 
         for (Alien alien : alienManager.getAliens()) {
             // Si los aliens tocan a cualquier jugador, ambos pierden
@@ -60,9 +73,11 @@ public class GameScreen implements Screen {
                 jugador_2.posicion_disparo.y = 10000;
                 alien.alive = false;
             }
-            alien.Dibujar(game.getBatch());
+            alien.Dibujar(game.getBatch(), shapeRenderer);
         }
         game.getBatch().end();
+
+        shapeRenderer.end();
     }
 
     // --- Métodos obligatorios de la interfaz Screen ---

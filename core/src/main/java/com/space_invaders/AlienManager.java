@@ -4,17 +4,19 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 
 public class AlienManager {
     private Alien[] aliens;
     private float alienMoveDirectionHorizontal = 1f;
     private float alienMoveDirectionVertical = 1f;
-    private final float alienHorizontalSpeed = 150f;
+    private final float alienHorizontalSpeed = 250f;
 
     // Variables para el descenso fluido
     private final float alienTotalDropDistance = 25f;
-    private final float alienVerticalSpeed = 50f;
+    private final float alienVerticalSpeed = 100f;
     private float currentDropDistance = 0f; // Distancia recorrida entre bajadas
 
     public AlienManager(int alto, int ancho, int espacio, Texture alien_img) {
@@ -134,8 +136,10 @@ public class AlienManager {
     }
 
     public void Dibujar(SpriteBatch batch) {
+        ShapeRenderer shapeRenderer = new ShapeRenderer();
         for (Alien alien : aliens) {
-            alien.Dibujar(batch);
+            alien.Dibujar(batch, shapeRenderer);
         }
+        shapeRenderer.end();
     }
 }
