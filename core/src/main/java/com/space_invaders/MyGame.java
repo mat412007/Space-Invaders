@@ -2,6 +2,7 @@ package com.space_invaders;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.space_invaders.screens.MenuScreen;
 
 // Extendiendo Game es la forma correcta de manejar pantallas.
 public class MyGame extends Game {

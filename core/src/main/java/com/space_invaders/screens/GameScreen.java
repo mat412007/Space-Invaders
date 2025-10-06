@@ -1,15 +1,10 @@
-package com.space_invaders;
+package com.space_invaders.screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen; // Importamos la interfaz Screen
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.ScreenUtils;
-
-import java.awt.*;
-import java.lang.management.MemoryUsage;
+import com.space_invaders.*;
 
 // GameScreen implementa Screen
 public class GameScreen implements Screen {
