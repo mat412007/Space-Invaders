@@ -22,6 +22,7 @@ public class Alien {
         this.alive = true;  // Se inicializa como vivo
     }
 
+    // Dibuja al alien individualmente si está vivo
     public void Dibujar(SpriteBatch batch){
         if(alive){
             this.sprite.setPosition(posicion.x, posicion.y);

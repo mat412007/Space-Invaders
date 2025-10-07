@@ -14,14 +14,17 @@ public class Controles implements Screen {
     SpriteBatch batch;
     MyGame game;
 
+    // Imagenes
     Texture nave_1;
     Texture nave_2;
     Texture imagenEnemigo;
 
+    // Visuales
     Sprite jugador_1;
     Sprite jugador_2;
     Sprite enemigo;
 
+    // Posiciones
     Vector2 posicion_1;
     Vector2 posicion_2;
     Vector2 posicionEnemigo;
@@ -38,6 +41,7 @@ public class Controles implements Screen {
         jugador_2 = new Sprite(nave_2);
         enemigo = new Sprite(imagenEnemigo);
 
+        // Tamaño de visuales
         jugador_1.setSize(100, 100);
         jugador_2.setSize(100, 100);
         enemigo.setSize(100, 100);
@@ -47,6 +51,7 @@ public class Controles implements Screen {
         posicionEnemigo = new Vector2(Gdx.graphics.getWidth()/3f, 200);
     }
 
+    // Para dibujar las imágenes
     public void dibujarJugador1(SpriteBatch batch){
         jugador_1.setPosition(posicion_1.x, posicion_1.y);
         jugador_1.draw(batch);
@@ -63,36 +68,30 @@ public class Controles implements Screen {
     @Override
     public void render(float delta) {
         ScreenUtils.clear(0f, 0f, 0f, 0f);
-        batch.begin();
+        // Dibujamos las imágenes
         dibujarJugador1(batch);
         dibujarJugador2(batch);
         dibujarEnemigo(batch);
-        batch.end();
     }
 
     @Override
     public void show() {
-
     }
 
     @Override
     public void resize(int width, int height) {
-
     }
 
     @Override
     public void pause() {
-
     }
 
     @Override
     public void resume() {
-
     }
 
     @Override
     public void hide() {
-
     }
 
     @Override

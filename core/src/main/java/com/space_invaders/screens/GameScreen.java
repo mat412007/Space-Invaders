@@ -2,9 +2,13 @@ package com.space_invaders.screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen; // Importamos la interfaz Screen
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.space_invaders.*;
+
+import java.awt.*;
 
 // GameScreen implementa Screen
 public class GameScreen implements Screen {
@@ -42,19 +46,21 @@ public class GameScreen implements Screen {
 
         game.getBatch().begin();
 
+        // Dibujamos las naves de los jugadores
         jugador.Dibujar(game.getBatch());
         jugador_2.Dibujar(game.getBatch());
 
+        // Cuando ya no quedan aliens
         if(alienManager.victoria()){
             game.setScreen(new MenuScreen(game));
-            System.out.println("Has ganado\nQuedan 0 aliens");
         }
 
+        // Si la bala conecta con un alien, si transporta fuera de la pantalla
         if (alienManager.colisionConBala(jugador.sprite_disparo)) {
-            jugador.posicion_disparo.y = 10000;
+            jugador.posicion_disparo.y = Gdx.graphics.getHeight();
         }
         if (alienManager.colisionConBala(jugador_2.sprite_disparo)) {
-            jugador_2.posicion_disparo.y = 10000;
+            jugador_2.posicion_disparo.y = Gdx.graphics.getHeight();
         }
 
         for (Alien alien : alienManager.getAliens()) {
@@ -63,9 +69,8 @@ public class GameScreen implements Screen {
                 alien.sprite.getBoundingRectangle().overlaps(jugador_2.sprite.getBoundingRectangle())){
                 game.setScreen(new MenuScreen(game));
             }
-            // Los disparos de cualquier jugador matan a los aliens y sacan el disparo de la pantalla
-            alien.Dibujar(game.getBatch());
         }
+        alienManager.Dibujar(game.getBatch());
         game.getBatch().end();
     }
 
@@ -78,12 +83,10 @@ public class GameScreen implements Screen {
 
     @Override
     public void dispose() {
-        // Liberar todos los assets que son exclusivos de esta pantalla.
         nave.dispose();
         nave_2.dispose();
         disparo.dispose();
         alien.dispose();
-        // El batch NO se libera aquí, se libera en MyGame.
     }
 
     @Override public void show() {}

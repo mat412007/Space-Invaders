@@ -13,7 +13,6 @@ public class MyGame extends Game {
     public void create() {
         // Contiene recursos comunes para que las clases que lo necesitan lo compartan
         batch = new SpriteBatch();
-
         //Cargamos la pantalla inicial
         setScreen(new MenuScreen(this)); // this hace referencia a MyGame
     }

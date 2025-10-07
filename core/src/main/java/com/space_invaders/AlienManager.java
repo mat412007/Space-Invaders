@@ -5,8 +5,6 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 
 public class AlienManager {
@@ -124,6 +122,7 @@ public class AlienManager {
         }
     }
 
+    // Llenamos el array de los aliens al empezar la partida
     public static void llenar(int alto, int ancho, Alien[] aliens, int espacio, Texture alien_img){
         int i = 0;
         for (int x = 0; x < alto; x++) {
