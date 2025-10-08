@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen; // Importamos la interfaz Screen
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.space_invaders.*;
@@ -13,6 +14,8 @@ import java.awt.*;
 // GameScreen implementa Screen
 public class GameScreen implements Screen {
     final MyGame game;
+    private SpriteBatch batch;
+    private Texture fondo;
 
     private Texture nave;
     private Texture nave_2;
@@ -24,6 +27,8 @@ public class GameScreen implements Screen {
 
     public GameScreen(final MyGame game) {
         this.game = game;
+        batch = game.getBatch();
+        fondo = new Texture("FondoJuego.png");
 
         nave = new Texture("nave.png");
         nave_2 = new Texture("nave_2.png");
@@ -44,11 +49,12 @@ public class GameScreen implements Screen {
         float deltaTime = Gdx.graphics.getDeltaTime();
         alienManager.ActualizarMovimiento(deltaTime);
 
-        game.getBatch().begin();
+        batch.begin();
+        batch.draw(fondo, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 
         // Dibujamos las naves de los jugadores
-        jugador.Dibujar(game.getBatch());
-        jugador_2.Dibujar(game.getBatch());
+        jugador.Dibujar(batch);
+        jugador_2.Dibujar(batch);
 
         // Cuando ya no quedan aliens
         if(alienManager.victoria()){
@@ -70,7 +76,7 @@ public class GameScreen implements Screen {
                 game.setScreen(new MenuScreen(game));
             }
         }
-        alienManager.Dibujar(game.getBatch());
+        alienManager.Dibujar(batch);
         game.getBatch().end();
     }
 

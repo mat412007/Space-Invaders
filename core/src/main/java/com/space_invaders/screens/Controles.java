@@ -68,10 +68,12 @@ public class Controles implements Screen {
     @Override
     public void render(float delta) {
         ScreenUtils.clear(0f, 0f, 0f, 0f);
+        batch.begin();
         // Dibujamos las imágenes
         dibujarJugador1(batch);
         dibujarJugador2(batch);
         dibujarEnemigo(batch);
+        batch.end();
     }
 
     @Override
