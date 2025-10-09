@@ -2,7 +2,10 @@ package com.space_invaders.screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
@@ -13,6 +16,9 @@ public class Controles implements Screen {
 
     SpriteBatch batch;
     MyGame game;
+
+    BitmapFont font;
+    GlyphLayout layout;
 
     // Imagenes
     Texture nave_1;
@@ -46,9 +52,14 @@ public class Controles implements Screen {
         jugador_2.setSize(100, 100);
         enemigo.setSize(100, 100);
 
-        posicion_1 = new Vector2(Gdx.graphics.getWidth()/3f, 600);
-        posicion_2 = new Vector2(Gdx.graphics.getWidth()/3f, 400);
-        posicionEnemigo = new Vector2(Gdx.graphics.getWidth()/3f, 200);
+        posicion_1 = new Vector2(25, Gdx.graphics.getHeight()*(5/8f));
+        posicion_2 = new Vector2(25, Gdx.graphics.getHeight()*(3/8f));
+        posicionEnemigo = new Vector2(25, Gdx.graphics.getHeight()*(1/8f));
+
+        font = new BitmapFont();
+        font.setColor(Color.WHITE);
+        font.getData().setScale(3f);
+        layout = new GlyphLayout();
     }
 
     // Para dibujar las imágenes
@@ -73,6 +84,10 @@ public class Controles implements Screen {
         dibujarJugador1(batch);
         dibujarJugador2(batch);
         dibujarEnemigo(batch);
+
+        String titulo = "SPACE INVADERS";
+        layout.setText(font, titulo);
+        font.draw(batch, titulo, (Gdx.graphics.getWidth()/2f)-(layout.width/2f), Gdx.graphics.getHeight()-layout.height-10f);
         batch.end();
     }
 
