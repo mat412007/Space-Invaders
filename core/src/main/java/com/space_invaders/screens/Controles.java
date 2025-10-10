@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.scenes.scene2d.utils.Layout;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.space_invaders.MyGame;
 
@@ -52,13 +53,12 @@ public class Controles implements Screen {
         jugador_2.setSize(100, 100);
         enemigo.setSize(100, 100);
 
-        posicion_1 = new Vector2(25, Gdx.graphics.getHeight()*(5/8f));
-        posicion_2 = new Vector2(25, Gdx.graphics.getHeight()*(3/8f));
-        posicionEnemigo = new Vector2(25, Gdx.graphics.getHeight()*(1/8f));
+        posicion_1 = new Vector2(Gdx.graphics.getWidth()/3f-jugador_1.getWidth(), (571f)*(5/8f)); // Uso la altura en la que terminan las instrucciones
+        posicion_2 = new Vector2(Gdx.graphics.getWidth()/3f-jugador_2.getWidth(), (571f)*(3/8f));
+        posicionEnemigo = new Vector2(Gdx.graphics.getWidth()/3f-enemigo.getWidth(), (571f)*(1/8f));
 
         font = new BitmapFont();
         font.setColor(Color.WHITE);
-        font.getData().setScale(3f);
         layout = new GlyphLayout();
     }
 
@@ -80,14 +80,44 @@ public class Controles implements Screen {
     public void render(float delta) {
         ScreenUtils.clear(0f, 0f, 0f, 0f);
         batch.begin();
-        // Dibujamos las imágenes
-        dibujarJugador1(batch);
-        dibujarJugador2(batch);
-        dibujarEnemigo(batch);
 
+        font.getData().setScale(2.5f);
+        dibujarJugador1(batch);
+        String nombre = "JUGADOR 1";
+        layout.setText(font, nombre);
+        font.draw(batch, nombre, posicion_1.x+jugador_1.getWidth()+30f, posicion_1.y+(jugador_1.getHeight()/2f)+layout.height/2f);
+        dibujarJugador2(batch);
+        nombre = "JUGADOR 2";
+        layout.setText(font, nombre);
+        font.draw(batch, nombre, posicion_2.x+jugador_2.getWidth()+30f, posicion_2.y+(jugador_2.getHeight()/2f)+layout.height/2f);
+        dibujarEnemigo(batch);
+        nombre = "ENEMIGO";
+        layout.setText(font, nombre);
+        font.draw(batch, nombre, posicionEnemigo.x+enemigo.getWidth()+30f, posicionEnemigo.y+(enemigo.getHeight()/2f)+layout.height/2f);
+
+        font.getData().setScale(4f);
         String titulo = "SPACE INVADERS";
         layout.setText(font, titulo);
-        font.draw(batch, titulo, (Gdx.graphics.getWidth()/2f)-(layout.width/2f), Gdx.graphics.getHeight()-layout.height-10f);
+        float posY = Gdx.graphics.getHeight() - 50f; // Posición inicial alta para el título
+        font.draw(batch, titulo, (Gdx.graphics.getWidth()/2f) - (layout.width/2f), posY);
+        posY -= layout.height + 30f; // Bajamos la posición por la altura del título más un pco de espacio adicional
+
+        // DIBUJAR INSTRUCCIONES
+        font.getData().setScale(1f);
+        float espaciadoEntreLineas = 10f; // Espacio vertical adicional entre líneas de instrucción
+        String[] instrucciones = {
+            "Las reglas del juego son simples:",
+            "El jugador controla una nave que dispara a los aliens.",
+            "Los aliens se moverán constantemente hacia los costados y hacia abajo.",
+            "El juego termina cuando todos los aliens están muertos,",
+            "o cuando estos hacen contacto con la nave del jugador."
+        };
+        for (String linea : instrucciones) {
+            layout.setText(font, linea);
+            font.draw(batch, linea, (Gdx.graphics.getWidth()/2f) - (layout.width/2f), posY);
+
+            posY -= layout.height + espaciadoEntreLineas; // Altura de la línea actual más el espacio adicional de separación
+        }
         batch.end();
     }
 
