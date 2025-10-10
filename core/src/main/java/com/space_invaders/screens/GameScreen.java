@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.space_invaders.*;
 
@@ -17,6 +18,8 @@ public class GameScreen implements Screen {
     private SpriteBatch batch;
     private Texture fondo;
 
+    private boolean multijugador;
+
     private Texture nave;
     private Texture nave_2;
     private Texture disparo;
@@ -25,10 +28,12 @@ public class GameScreen implements Screen {
     private Jugador2 jugador_2;
     private AlienManager alienManager;
 
-    public GameScreen(final MyGame game) {
+    public GameScreen(final MyGame game, boolean multijugador) {
         this.game = game;
         batch = game.getBatch();
         fondo = new Texture("FondoJuego.png");
+
+        this.multijugador = multijugador;
 
         nave = new Texture("nave.png");
         nave_2 = new Texture("nave_2.png");
@@ -40,6 +45,11 @@ public class GameScreen implements Screen {
         int altoAliens = 4;
         int espacioAliens = 80;
         alienManager = new AlienManager(altoAliens, anchoAliens, espacioAliens, alien);
+
+        if(!multijugador) {
+            jugador.posicion = new Vector2(Gdx.graphics.getWidth()/2f-jugador.sprite.getWidth()/2f, 10);
+            jugador_2.posicion = new Vector2(0, Gdx.graphics.getHeight());
+        }
     }
 
     @Override

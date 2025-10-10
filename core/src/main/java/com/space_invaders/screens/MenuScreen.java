@@ -21,6 +21,7 @@ public class MenuScreen implements Screen {
     private Stage stage;
     private Table table;
     private final SpriteBatch batch;
+    private boolean multijugador;
 
     public MenuScreen(final MyGame game) {
         this.game = game;
@@ -50,7 +51,7 @@ public class MenuScreen implements Screen {
     private void crearBotones() {
         // 1. Crear los TextButton
         TextButton botonJugar = new TextButton("JUGAR", skin);
-        TextButton botonOpciones = new TextButton("OPCIONES", skin);
+        TextButton botonMultijugador = new TextButton("MULTIJUGADOR", skin);
         TextButton botonControles = new TextButton("CONTROLES", skin);
         TextButton botonSalir = new TextButton("SALIR", skin);
 
@@ -61,7 +62,7 @@ public class MenuScreen implements Screen {
         table.padTop(200); // Añade relleno a la parte de arriba de la tabla, y ayuda a centrar los botones
         table.add(botonJugar).width(anchoBoton).height(altoBoton).pad(15);
         table.row(); // Siguiente fila
-        table.add(botonOpciones).width(anchoBoton).height(altoBoton).pad(15);
+        table.add(botonMultijugador).width(anchoBoton).height(altoBoton).pad(15);
         table.row(); // Siguiente fila
         table.add(botonControles).width(anchoBoton).height(altoBoton).pad(15);
         table.row();
@@ -71,14 +72,16 @@ public class MenuScreen implements Screen {
         botonJugar.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                game.setScreen(new GameScreen(game));
-                Gdx.app.log("Menu", "JUGAR presionado");
+                multijugador = false;
+                game.setScreen(new GameScreen(game, multijugador));
             }
         });
 
-        botonOpciones.addListener(new ChangeListener() {
+        botonMultijugador.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
+                multijugador = true;
+                game.setScreen(new GameScreen(game, multijugador));
             }
         });
         botonControles.addListener(new ChangeListener() {
