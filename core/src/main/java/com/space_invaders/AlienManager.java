@@ -39,17 +39,6 @@ public class AlienManager {
 
             float descensoEnEsteFrame = alienVerticalSpeed * deltaTime;
 
-            /*float minY = Float.MAX_VALUE;
-            float maxY = Float.MIN_VALUE;
-            hayAliensVivos = false;
-            for (Alien alien : aliens) {
-                if (alien.alive) {
-                    hayAliensVivos = true;
-                    if (alien.sprite.getX() < minY) minY = alien.sprite.getX();
-                    if (alien.sprite.getX() > maxY) maxY = alien.sprite.getX();
-                }
-            }*/
-
             // Limita el descenso
             if (currentDropDistance + descensoEnEsteFrame > alienTotalDropDistance) {
                 descensoEnEsteFrame = alienTotalDropDistance - currentDropDistance;
@@ -91,13 +80,14 @@ public class AlienManager {
         if (!hayAliensVivos) return;
 
         // 2. Comprueba si toca el borde y activa la bandera tocaBorde
-        float screenRight = Gdx.graphics.getWidth();
+        float screenLeft = 150;
+        float screenRight = 850;
         float alienWidth = aliens[0].sprite.getWidth();
 
         if (alienMoveDirectionHorizontal == 1.0f && (maxX + alienWidth) >= screenRight) {
             alienMoveDirectionHorizontal = -1.0f; // Cambia a izquierda
             tocaBorde = true;
-        } else if (alienMoveDirectionHorizontal == -1.0f && minX <= 0) {
+        } else if (alienMoveDirectionHorizontal == -1.0f && minX <= screenLeft) {
             alienMoveDirectionHorizontal = 1.0f; // Cambia a derecha
             tocaBorde = true;
         }

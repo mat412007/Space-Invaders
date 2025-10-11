@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen; // Importamos la interfaz Screen
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
@@ -16,7 +17,9 @@ import java.awt.*;
 public class GameScreen implements Screen {
     final MyGame game;
     private SpriteBatch batch;
+
     private Texture fondo;
+    private Sprite fondoPantalla;
 
     private boolean multijugador;
 
@@ -31,7 +34,9 @@ public class GameScreen implements Screen {
     public GameScreen(final MyGame game, boolean multijugador) {
         this.game = game;
         batch = game.getBatch();
+
         fondo = new Texture("FondoJuego.png");
+        fondoPantalla = new Sprite(fondo);
 
         this.multijugador = multijugador;
 
@@ -60,7 +65,11 @@ public class GameScreen implements Screen {
         alienManager.ActualizarMovimiento(deltaTime);
 
         batch.begin();
-        batch.draw(fondo, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        // batch.draw(fondo, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        // Dibujar fondo de pantalla ajustado
+        fondoPantalla.setSize(700, Gdx.graphics.getHeight());
+        fondoPantalla.setPosition(150, 0);
+        fondoPantalla.draw(batch);
 
         // Dibujamos las naves de los jugadores
         jugador.Dibujar(batch);
@@ -88,6 +97,8 @@ public class GameScreen implements Screen {
         }
         alienManager.Dibujar(batch);
         game.getBatch().end();
+        Linea.dibujar(150, 0, 150, Gdx.graphics.getHeight()); // Espacio de juego es de 700
+        Linea.dibujar(850, 0, 850, Gdx.graphics.getHeight());
     }
 
     // --- Métodos obligatorios de la interfaz Screen ---

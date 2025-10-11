@@ -15,7 +15,7 @@ public class Jugador {
     public Sprite sprite;
     public Sprite sprite_disparo;
     public float velocidad = 350;
-    public float velocidad_disparo = 1300;
+    public float velocidad_disparo = 1500;
 
     public Jugador(Texture img_nave, Texture img_disparo){
         sprite = new Sprite(img_nave);
@@ -44,10 +44,10 @@ public class Jugador {
             posicion.x += deltaTime * velocidad;
         }
         // Para que la nave no se salga de los limites
-        if(posicion.x < 0){
-            posicion.x = 0;
-        } else if(posicion.x >= Gdx.graphics.getWidth()-sprite.getWidth()){
-            posicion.x = Gdx.graphics.getWidth()-sprite.getWidth();
+        if(posicion.x < 150){
+            posicion.x = 150;
+        } else if(posicion.x >= 850-sprite.getWidth()){
+            posicion.x = 850-sprite.getWidth();
         }
 
         posicion_disparo.y += deltaTime*velocidad_disparo;
