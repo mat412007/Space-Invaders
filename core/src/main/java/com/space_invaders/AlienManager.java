@@ -11,14 +11,9 @@ public class AlienManager {
     private Alien[] aliens;
     private int aliensRestantes;
 
-    private float alienMoveDirectionHorizontal = 1f;
-    private float alienMoveDirectionVertical = 1f;
-    private final float alienHorizontalSpeed = 250f;
-
-    // Variables para el descenso fluido
-    private final float alienTotalDropDistance = 25f;
-    private final float alienVerticalSpeed = 100f;
-    private float currentDropDistance = 0f; // Distancia recorrida entre bajadas
+    float currentDropDistance = 0f; // Distancia recorrida entre bajadas
+    float alienMoveDirectionHorizontal = 1f;
+    float alienMoveDirectionVertical = 1f;
 
     public AlienManager(int alto, int ancho, int espacio, Texture alien_img) {
         aliens = new Alien[ancho * alto];
@@ -33,11 +28,33 @@ public class AlienManager {
     public void ActualizarMovimiento(float deltaTime) {
 
         boolean hayAliensVivos;
+        // Variables para el descenso fluido
+        float alienTotalDropDistance = 25f;
+        final float alienHorizontalSpeed = 250f;
+        float alienVerticalSpeed = 100f;
 
         // Si ya hay una distancia de descenso pendiente, aplicarla primero
         if (currentDropDistance > 0f && currentDropDistance < alienTotalDropDistance) {
 
-            float descensoEnEsteFrame = alienVerticalSpeed * deltaTime;
+            float minY = Float.MAX_VALUE;
+            float maxY = Float.MIN_VALUE;
+            float alienHeight = aliens[0].sprite.getHeight();
+
+            // 1. Encontrar límites
+            for (Alien alien : aliens) {
+                if (alien.alive) {
+                    if (alien.sprite.getY() < minY) minY = alien.sprite.getY();
+                    if (alien.sprite.getY() > maxY) maxY = alien.sprite.getY();
+                }
+            }
+
+            if (alienMoveDirectionVertical == 1f && maxY >= Gdx.graphics.getHeight()) {
+                alienMoveDirectionVertical = -1f; // Cambia a izquierda
+            } else if (alienMoveDirectionVertical == -1f && (minY + alienHeight) <= 0) {
+                alienMoveDirectionVertical = 1f; // Cambia a derecha
+            }
+
+            float descensoEnEsteFrame = alienVerticalSpeed * deltaTime * alienMoveDirectionVertical;
 
             // Limita el descenso
             if (currentDropDistance + descensoEnEsteFrame > alienTotalDropDistance) {
@@ -94,7 +111,7 @@ public class AlienManager {
 
         // 3. Aplicar movimiento
         if (tocaBorde) {
-            // SI toca el borde, inciamos el descenso, y el movimiento horizontal se detendrá
+            // SI toca el borde, iniciamos el descenso, y el movimiento horizontal se detendrá
             currentDropDistance = 0.001f;
         }
 

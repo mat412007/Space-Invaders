@@ -67,7 +67,7 @@ public class GameScreen implements Screen {
         icono_2 = new Sprite(nave_2);
 
         if(!multijugador) {
-            jugador.posicion = new Vector2(Gdx.graphics.getWidth()/2f-jugador.sprite.getWidth()/2f, 10);
+            jugador.posicion = new Vector2((Gdx.graphics.getWidth()/2f)-(jugador.sprite.getWidth()/2f), 10);
             jugador_2.posicion = new Vector2(0, Gdx.graphics.getHeight());
         }
     }

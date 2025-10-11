@@ -113,7 +113,7 @@ public class Controles implements Screen {
         posY -= layout.height + 30f; // Bajamos la posición por la altura del título más un pco de espacio adicional
 
         // DIBUJAR INSTRUCCIONES
-        font.getData().setScale(1f);
+        font.getData().setScale(1.5f);
         float espaciadoEntreLineas = 10f; // Espacio vertical adicional entre líneas de instrucción
         String[] instrucciones = {
             "Las reglas del juego son simples:",
