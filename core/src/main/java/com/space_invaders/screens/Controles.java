@@ -9,6 +9,12 @@ import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.Layout;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.space_invaders.MyGame;
@@ -20,6 +26,10 @@ public class Controles implements Screen {
 
     BitmapFont font;
     GlyphLayout layout;
+
+    private Skin skin;
+    private Stage stage;
+    private Table table;
 
     // Imagenes
     Texture nave_1;
@@ -119,10 +129,32 @@ public class Controles implements Screen {
             posY -= layout.height + espaciadoEntreLineas; // Altura de la línea actual más el espacio adicional de separación
         }
         batch.end();
+
+        if (stage != null) {
+            stage.act(delta);
+            stage.draw();
+        }
     }
 
-    @Override
-    public void show() {
+    @Override public void show() {
+        skin = new Skin(Gdx.files.internal("uiskin.json"));
+        stage = new Stage();
+        Gdx.input.setInputProcessor(stage);
+        table = new Table(skin); // Integrar estilos de la skin
+        table.setFillParent(true);
+        stage.addActor(table);
+        TextButton back = new TextButton("Back", skin);
+        float anchoBoton = 100f; // Ancho fijo en píxeles
+        float altoBoton = 40f; // Alto fijo en píxeles
+        table.top().left();
+        table.add(back).width(anchoBoton).height(altoBoton).pad(15);
+
+        back.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                game.setScreen(new MenuScreen(game));
+            }
+        });
     }
 
     @Override

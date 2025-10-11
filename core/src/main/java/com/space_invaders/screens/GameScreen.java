@@ -8,6 +8,12 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.space_invaders.*;
 
@@ -22,6 +28,12 @@ public class GameScreen implements Screen {
     private Sprite fondoPantalla;
 
     private boolean multijugador;
+    private Sprite icono_1;
+    private Sprite icono_2;
+
+    private Skin skin;
+    private Stage stage;
+    private Table table;
 
     private Texture nave;
     private Texture nave_2;
@@ -51,6 +63,9 @@ public class GameScreen implements Screen {
         int espacioAliens = 80;
         alienManager = new AlienManager(altoAliens, anchoAliens, espacioAliens, alien);
 
+        icono_1 = new Sprite(nave);
+        icono_2 = new Sprite(nave_2);
+
         if(!multijugador) {
             jugador.posicion = new Vector2(Gdx.graphics.getWidth()/2f-jugador.sprite.getWidth()/2f, 10);
             jugador_2.posicion = new Vector2(0, Gdx.graphics.getHeight());
@@ -65,6 +80,12 @@ public class GameScreen implements Screen {
         alienManager.ActualizarMovimiento(deltaTime);
 
         batch.begin();
+        icono_1.setSize(100, 100);
+        icono_2.setSize(100, 100);
+        icono_1.setPosition(150/2f-icono_1.getWidth()/2f, Gdx.graphics.getHeight()/2f-icono_1.getHeight()/2f);
+        icono_2.setPosition(Gdx.graphics.getWidth()-(150/2f)-icono_1.getWidth()/2f, Gdx.graphics.getHeight()/2f-icono_2.getHeight()/2f);
+        icono_1.draw(batch);
+        icono_2.draw(batch);
         // batch.draw(fondo, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         // Dibujar fondo de pantalla ajustado
         fondoPantalla.setSize(700, Gdx.graphics.getHeight());
@@ -99,6 +120,12 @@ public class GameScreen implements Screen {
         game.getBatch().end();
         Linea.dibujar(150, 0, 150, Gdx.graphics.getHeight()); // Espacio de juego es de 700
         Linea.dibujar(850, 0, 850, Gdx.graphics.getHeight());
+
+        // Mostrar el botón de back
+        if (stage != null) {
+            stage.act(delta);
+            stage.draw();
+        }
     }
 
     // --- Métodos obligatorios de la interfaz Screen ---
@@ -116,7 +143,26 @@ public class GameScreen implements Screen {
         alien.dispose();
     }
 
-    @Override public void show() {}
+    @Override public void show() {
+        skin = new Skin(Gdx.files.internal("uiskin.json"));
+        stage = new Stage();
+        Gdx.input.setInputProcessor(stage);
+        table = new Table(skin); // Integrar estilos de la skin
+        table.setFillParent(true);
+        stage.addActor(table);
+        TextButton back = new TextButton("Back", skin);
+        float anchoBoton = 100f; // Ancho fijo en píxeles
+        float altoBoton = 40f; // Alto fijo en píxeles
+        table.top().left();
+        table.add(back).width(anchoBoton).height(altoBoton).pad(15);
+
+        back.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                game.setScreen(new MenuScreen(game));
+            }
+        });
+    }
     @Override public void pause() {}
     @Override public void resume() {}
     @Override public void hide() {}

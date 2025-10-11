@@ -17,9 +17,11 @@ public class MenuScreen implements Screen {
 
     private final MyGame game;
     private final Texture imagenFondo;
+
     private Skin skin;
     private Stage stage;
     private Table table;
+
     private final SpriteBatch batch;
     private boolean multijugador;
 
@@ -63,7 +65,7 @@ public class MenuScreen implements Screen {
         table.add(botonJugar).width(anchoBoton).height(altoBoton).pad(15);
         table.row(); // Siguiente fila
         table.add(botonMultijugador).width(anchoBoton).height(altoBoton).pad(15);
-        table.row(); // Siguiente fila
+        table.row();
         table.add(botonControles).width(anchoBoton).height(altoBoton).pad(15);
         table.row();
         table.add(botonSalir).width(anchoBoton).height(altoBoton).pad(15);
