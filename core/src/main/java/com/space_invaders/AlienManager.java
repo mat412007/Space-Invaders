@@ -30,8 +30,8 @@ public class AlienManager {
         boolean hayAliensVivos;
         // Variables para el descenso fluido
         float alienTotalDropDistance = 25f;
-        final float alienHorizontalSpeed = 250f;
-        float alienVerticalSpeed = 100f;
+        final float alienHorizontalSpeed = 500f;
+        float alienVerticalSpeed = 300f;
 
         // Si ya hay una distancia de descenso pendiente, aplicarla primero
         if (currentDropDistance > 0f && currentDropDistance < alienTotalDropDistance) {
@@ -44,22 +44,24 @@ public class AlienManager {
             for (Alien alien : aliens) {
                 if (alien.alive) {
                     if (alien.sprite.getY() < minY) minY = alien.sprite.getY();
-                    if (alien.sprite.getY() > maxY) maxY = alien.sprite.getY();
+                    if (alien.sprite.getY() > maxY) maxY = alien.sprite.getY() + alienHeight;
                 }
             }
 
-            if (alienMoveDirectionVertical == 1f && maxY >= Gdx.graphics.getHeight()) {
-                alienMoveDirectionVertical = -1f; // Cambia a izquierda
-            } else if (alienMoveDirectionVertical == -1f && (minY + alienHeight) <= 0) {
-                alienMoveDirectionVertical = 1f; // Cambia a derecha
+            System.out.println("alienMoveDirectionVertical" + alienMoveDirectionVertical);
+            System.out.println("minY " + minY + " alienHeight "+ alienHeight);
+            if (alienMoveDirectionVertical == -1f && maxY >= Gdx.graphics.getHeight()) {
+                alienMoveDirectionVertical = 1f; // Cambia a izquierda
+            } else if (alienMoveDirectionVertical == 1f && (minY + alienHeight) <= 0) {
+                alienMoveDirectionVertical = -1f; // Cambia a derecha
             }
 
             float descensoEnEsteFrame = alienVerticalSpeed * deltaTime * alienMoveDirectionVertical;
 
             // Limita el descenso
-            if (currentDropDistance + descensoEnEsteFrame > alienTotalDropDistance) {
-                descensoEnEsteFrame = alienTotalDropDistance - currentDropDistance;
-            }
+//            if (currentDropDistance + descensoEnEsteFrame > alienTotalDropDistance) {
+//                descensoEnEsteFrame = alienTotalDropDistance - currentDropDistance;
+//            }
 
             // Aplica el descenso
             for (Alien alien : aliens) {
@@ -69,7 +71,7 @@ public class AlienManager {
                 }
             }
 
-            currentDropDistance += descensoEnEsteFrame;
+            currentDropDistance += descensoEnEsteFrame *  alienMoveDirectionVertical;
 
             // Si el descenso terminó en este frame, lo forzamos a 0.0f para reanudar el horizontal
             if (currentDropDistance >= alienTotalDropDistance) {
