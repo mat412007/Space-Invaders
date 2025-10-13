@@ -51,17 +51,12 @@ public class AlienManager {
             System.out.println("alienMoveDirectionVertical" + alienMoveDirectionVertical);
             System.out.println("minY " + minY + " alienHeight "+ alienHeight);
             if (alienMoveDirectionVertical == -1f && maxY >= Gdx.graphics.getHeight()) {
-                alienMoveDirectionVertical = 1f; // Cambia a izquierda
-            } else if (alienMoveDirectionVertical == 1f && (minY + alienHeight) <= 0) {
-                alienMoveDirectionVertical = -1f; // Cambia a derecha
+                alienMoveDirectionVertical = 1f;
+            } else if (alienMoveDirectionVertical == 1f && minY <= 0) {
+                alienMoveDirectionVertical = -1f; // C
             }
 
             float descensoEnEsteFrame = alienVerticalSpeed * deltaTime * alienMoveDirectionVertical;
-
-            // Limita el descenso
-//            if (currentDropDistance + descensoEnEsteFrame > alienTotalDropDistance) {
-//                descensoEnEsteFrame = alienTotalDropDistance - currentDropDistance;
-//            }
 
             // Aplica el descenso
             for (Alien alien : aliens) {
@@ -88,11 +83,12 @@ public class AlienManager {
         boolean tocaBorde = false;
 
         // 1. Encontrar límites
+        float alienWidth = aliens[0].sprite.getWidth();
         for (Alien alien : aliens) {
             if (alien.alive) {
                 hayAliensVivos = true;
                 if (alien.sprite.getX() < minX) minX = alien.sprite.getX();
-                if (alien.sprite.getX() > maxX) maxX = alien.sprite.getX();
+                if (alien.sprite.getX() > maxX) maxX = alien.sprite.getX() + alienWidth;
             }
         }
 
@@ -101,9 +97,8 @@ public class AlienManager {
         // 2. Comprueba si toca el borde y activa la bandera tocaBorde
         float screenLeft = 150;
         float screenRight = 850;
-        float alienWidth = aliens[0].sprite.getWidth();
 
-        if (alienMoveDirectionHorizontal == 1.0f && (maxX + alienWidth) >= screenRight) {
+        if (alienMoveDirectionHorizontal == 1.0f && maxX >= screenRight) {
             alienMoveDirectionHorizontal = -1.0f; // Cambia a izquierda
             tocaBorde = true;
         } else if (alienMoveDirectionHorizontal == -1.0f && minX <= screenLeft) {
