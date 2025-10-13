@@ -30,7 +30,6 @@ public class AlienManager {
         // Inicializamos minX y maxX con valores extremos para encontrar límites reales
         float minX = aliens[0].posicion.x;
         float maxX = aliens[0].posicion.x;
-
         // Encontrar límites entre aliens vivos
         for (Alien alien : aliens) {
             if (alien.alive) {
@@ -38,18 +37,24 @@ public class AlienManager {
                 if (alien.posicion.x > maxX) { maxX = alien.posicion.x + alien.sprite.getWidth(); }
             }
         }
-
         // Cambiar dirección solo una vez si se toca el borde
         if (minX <= 150 || maxX >= 850) {
             direccionHorizontal *= -1f;
         }
-
         // Mover aliens vivos según la dirección actual
         float alienHorizontalSpeed = 300f;
         for (Alien alien : aliens) {
             if (alien.alive) {
                 alien.posicion.x += alienHorizontalSpeed * deltaTime * direccionHorizontal;
             }
+        }
+
+        float minY = aliens[0].posicion.y;
+        float maxY = aliens[0].posicion.y;
+        for(Alien alien : aliens) {
+            if(alien.posicion.y < minY) { minY = alien.posicion.y; }
+            if(alien.posicion.y > maxY) { maxY = alien.posicion.y + alien.sprite.getHeight(); }
+
         }
     }
 
