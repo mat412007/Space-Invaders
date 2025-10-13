@@ -12,7 +12,7 @@ public class AlienManager {
     private int aliensRestantes;
 
     float currentDropDistance = 0f; // Distancia recorrida entre bajadas
-    float alienMoveDirectionHorizontal = 1f;
+    float direccionHorizontal = 1f;
     float alienMoveDirectionVertical = 1f;
 
     public AlienManager(int alto, int ancho, int espacio, Texture alien_img) {
@@ -26,6 +26,75 @@ public class AlienManager {
     }
 
     public void ActualizarMovimiento(float deltaTime) {
+
+        // Inicializamos minX y maxX con valores extremos para encontrar límites reales
+        float minX = aliens[0].posicion.x;
+        float maxX = aliens[0].posicion.x;
+
+        // Encontrar límites entre aliens vivos
+        for (Alien alien : aliens) {
+            if (alien.alive) {
+                if (alien.posicion.x < minX) { minX = alien.posicion.x; }
+                if (alien.posicion.x > maxX) { maxX = alien.posicion.x + alien.sprite.getWidth(); }
+            }
+        }
+
+        // Cambiar dirección solo una vez si se toca el borde
+        if (minX <= 150 || maxX >= 850) {
+            direccionHorizontal *= -1f;
+        }
+
+        // Mover aliens vivos según la dirección actual
+        float alienHorizontalSpeed = 300f;
+        for (Alien alien : aliens) {
+            if (alien.alive) {
+                alien.posicion.x += alienHorizontalSpeed * deltaTime * direccionHorizontal;
+            }
+        }
+    }
+
+
+    // Llenamos el array de los aliens al empezar la partida
+    public static void llenar(int alto, int ancho, Alien[] aliens, int espacio, Texture alien_img){
+        int i = 0;
+        for (int x = 0; x < alto; x++) {
+            for (int y = 0; y < ancho; y++) {
+                Vector2 posicionAlien = new Vector2(y * espacio, x * espacio);
+                posicionAlien.x += Gdx.graphics.getWidth() / 2f;
+                posicionAlien.y += Gdx.graphics.getHeight();
+                posicionAlien.x -= (ancho / 2f) * espacio;
+                posicionAlien.y -= alto * espacio;
+                aliens[i] = new Alien(posicionAlien, alien_img, Color.GREEN);
+                i++;
+            }
+        }
+    }
+
+    // Verificar el impacto de la bala con el alien
+    public boolean colisionConBala(Sprite spriteBala) {
+        for(Alien alien : aliens){
+            if(alien.sprite.getBoundingRectangle().overlaps(spriteBala.getBoundingRectangle()) && alien.alive){
+                alien.alive = false;
+                aliensRestantes--;
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean victoria(){
+        return aliensRestantes == 0;
+    } // Condicion para la victoria
+
+    public void Dibujar(SpriteBatch batch) {
+        for (Alien alien : aliens) {
+            alien.Dibujar(batch);
+        }
+    }
+}
+
+/*
+public void ActualizarMovimiento(float deltaTime) {
 
         boolean hayAliensVivos;
         // Variables para el descenso fluido
@@ -125,42 +194,4 @@ public class AlienManager {
             }
         }
     }
-
-    // Llenamos el array de los aliens al empezar la partida
-    public static void llenar(int alto, int ancho, Alien[] aliens, int espacio, Texture alien_img){
-        int i = 0;
-        for (int x = 0; x < alto; x++) {
-            for (int y = 0; y < ancho; y++) {
-                Vector2 posicionAlien = new Vector2(y * espacio, x * espacio);
-                posicionAlien.x += Gdx.graphics.getWidth() / 2f;
-                posicionAlien.y += Gdx.graphics.getHeight();
-                posicionAlien.x -= (ancho / 2f) * espacio;
-                posicionAlien.y -= alto * espacio;
-                aliens[i] = new Alien(posicionAlien, alien_img, Color.GREEN);
-                i++;
-            }
-        }
-    }
-
-    // Verificar el impacto de la bala con el alien
-    public boolean colisionConBala(Sprite spriteBala) {
-        for(Alien alien : aliens){
-            if(alien.sprite.getBoundingRectangle().overlaps(spriteBala.getBoundingRectangle()) && alien.alive){
-                alien.alive = false;
-                aliensRestantes--;
-                return true;
-            }
-        }
-        return false;
-    }
-
-    public boolean victoria(){
-        return aliensRestantes == 0;
-    }
-
-    public void Dibujar(SpriteBatch batch) {
-        for (Alien alien : aliens) {
-            alien.Dibujar(batch);
-        }
-    }
-}
+*/
