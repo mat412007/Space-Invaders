@@ -31,7 +31,7 @@ public class AlienManager {
 
         boolean hayAliensVivos;
         // Variables para el descenso fluido
-        float alienTotalDropDistance = 25f;
+        float alienTotalDropDistance = 50f; // 80
         final float alienHorizontalSpeed = 500f;
         float alienVerticalSpeed = 300f;
 
@@ -42,7 +42,7 @@ public class AlienManager {
             float maxY = Float.MIN_VALUE;
             float alienHeight = aliens[0].sprite.getHeight();
 
-            // 1. Encontrar límites
+            // 1. Encontrar límites verticales
             for (Alien alien : aliens) {
                 if (alien.alive) {
                     if (alien.sprite.getY() < minY) minY = alien.sprite.getY();
@@ -50,17 +50,31 @@ public class AlienManager {
                 }
             }
 
-            System.out.println("direccionVertical" + direccionVertical);
-            System.out.println("minY " + minY + " alienHeight "+ alienHeight);
+            // Control de dirección vertical (rebote contra bordes superior/inferior)
             if (direccionVertical == -1f && maxY >= Gdx.graphics.getHeight()) {
                 direccionVertical = 1f;
             } else if (direccionVertical == 1f && minY <= 0) {
-                direccionVertical = -1f; // C
+                direccionVertical = -1f;
             }
 
             float descensoEnEsteFrame = alienVerticalSpeed * deltaTime * direccionVertical;
 
-            // Aplica el descenso
+            // --- Ajustar para no salirse del borde ---
+            float screenTop = Gdx.graphics.getHeight();
+            float screenBottom = 0f;
+
+            // Si se mueve hacia arriba (direccionVertical = -1)
+            if (direccionVertical == -1f && (maxY - descensoEnEsteFrame) > screenTop) {
+                float ajuste = screenTop - maxY;
+                descensoEnEsteFrame = -ajuste;
+            }
+            // Si se mueve hacia abajo (direccionVertical = 1)
+            else if (direccionVertical == 1f && (minY - descensoEnEsteFrame) < screenBottom) {
+                float ajuste = screenBottom - minY;
+                descensoEnEsteFrame = -ajuste;
+            }
+
+            // Aplica el descenso corregido
             for (Alien alien : aliens) {
                 if (alien.alive) {
                     alien.posicion.y -= descensoEnEsteFrame;
@@ -68,9 +82,10 @@ public class AlienManager {
                 }
             }
 
-            currentDropDistance += descensoEnEsteFrame *  direccionVertical;
+            // Actualiza la distancia recorrida verticalmente
+            currentDropDistance += descensoEnEsteFrame * direccionVertical;
 
-            // Si el descenso terminó en este frame, lo forzamos a 0.0f para reanudar el horizontal
+            // Si el descenso terminó, lo reiniciamos
             if (currentDropDistance >= alienTotalDropDistance) {
                 currentDropDistance = 0.0f;
             }
@@ -78,13 +93,12 @@ public class AlienManager {
             return; // No mover horizontalmente mientras desciende
         }
 
-        // --- Si el descenso está inactivo o acaba de terminar, movemos horizontalmente ---
+        // --- Movimiento horizontal ---
         float minX = Float.MAX_VALUE;
         float maxX = Float.MIN_VALUE;
         hayAliensVivos = false;
         boolean tocaBorde = false;
 
-        // 1. Encontrar límites
         float alienWidth = aliens[0].sprite.getWidth();
         for (Alien alien : aliens) {
             if (alien.alive) {
@@ -96,10 +110,11 @@ public class AlienManager {
 
         if (!hayAliensVivos) return;
 
-        // 2. Comprueba si toca el borde y activa la bandera tocaBorde
+        // Límites horizontales del área jugable
         float screenLeft = 150;
         float screenRight = 850;
 
+        // Cambia dirección si toca los bordes laterales
         if (direccionHorizontal == 1.0f && maxX >= screenRight) {
             direccionHorizontal = -1.0f; // Cambia a izquierda
             tocaBorde = true;
@@ -108,14 +123,12 @@ public class AlienManager {
             tocaBorde = true;
         }
 
-        // 3. Aplicar movimiento
+        // Si toca borde, iniciar el descenso (pausando el movimiento horizontal)
         if (tocaBorde) {
-            // SI toca el borde, iniciamos el descenso, y el movimiento horizontal se detendrá
             currentDropDistance = 0.001f;
         }
 
-
-        // Si no tocamos el borde, nos movemos horizontalmente
+        // Movimiento horizontal normal
         if (!tocaBorde) {
             float movimientoHorizontal = alienHorizontalSpeed * direccionHorizontal * deltaTime;
 
@@ -127,6 +140,7 @@ public class AlienManager {
             }
         }
     }
+
 
 
     // Llenamos el array de los aliens al empezar la partida
