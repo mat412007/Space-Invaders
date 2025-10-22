@@ -30,19 +30,18 @@ public class AlienManager {
     public void ActualizarMovimiento(float deltaTime) {
 
         boolean hayAliensVivos;
-        // Variables para el descenso fluido
+        // Variables para el descenso
         float alienTotalDropDistance = 50f; // 80
         final float alienHorizontalSpeed = 500f;
         float alienVerticalSpeed = 300f;
 
-        // Si ya hay una distancia de descenso pendiente, aplicarla primero
+        // Si ya hay una distancia de descenso pendiente, hay que aplicarla primero
         if (currentDropDistance > 0f && currentDropDistance < alienTotalDropDistance) {
 
             float minY = Float.MAX_VALUE;
             float maxY = Float.MIN_VALUE;
             float alienHeight = aliens[0].sprite.getHeight();
-
-            // 1. Encontrar límites verticales
+            // Encontrar límites verticales
             for (Alien alien : aliens) {
                 if (alien.alive) {
                     if (alien.sprite.getY() < minY) minY = alien.sprite.getY();
@@ -50,7 +49,7 @@ public class AlienManager {
                 }
             }
 
-            // Control de dirección vertical (rebote contra bordes superior/inferior)
+            // Control de dirección vertical (rebote contra bordes superior e inferior)
             if (direccionVertical == -1f && maxY >= Gdx.graphics.getHeight()) {
                 direccionVertical = 1f;
             } else if (direccionVertical == 1f && minY <= 0) {
@@ -59,7 +58,7 @@ public class AlienManager {
 
             float descensoEnEsteFrame = alienVerticalSpeed * deltaTime * direccionVertical;
 
-            // --- Ajustar para no salirse del borde ---
+            // Ajustar para no salirse del borde
             float screenTop = Gdx.graphics.getHeight();
             float screenBottom = 0f;
 
@@ -110,7 +109,7 @@ public class AlienManager {
 
         if (!hayAliensVivos) return;
 
-        // Límites horizontales del área jugable
+        // Límites horizontales
         float screenLeft = 150;
         float screenRight = 850;
 
