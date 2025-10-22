@@ -38,30 +38,30 @@ public class MenuScreen implements Screen {
 
         stage = new Stage();
 
-        // 3. Establecer el Stage como el procesador de entrada
+        // Establecer el Stage como el procesador de entrada
         Gdx.input.setInputProcessor(stage);
 
-        // 4. Crear la Table y centrarla
+        // Crear la Table y centrarla
         table = new Table(skin); // Integrar estilos de la skin
         table.setFillParent(true); // Hace que la Table ocupe todo el Stage y pantalla
         stage.addActor(table);
 
-        // 5. Crear y añadir los botones
+        // Crear y añadir los botones
         crearBotones();
     }
 
     private void crearBotones() {
-        // 1. Crear los TextButton
+        // Crear los TextButton
         TextButton botonJugar = new TextButton("JUGAR", skin);
         TextButton botonMultijugador = new TextButton("MULTIJUGADOR", skin);
         TextButton botonControles = new TextButton("CONTROLES", skin);
         TextButton botonSalir = new TextButton("SALIR", skin);
 
-        // 2. Añadir los botones a la Table, uno debajo del otro
+        // Añadir los botones a la Table, uno debajo del otro
         float anchoBoton = 200f; // Ancho fijo en píxeles
         float altoBoton = 60f; // Alto fijo en píxeles
-        // El método .row() es clave para la disposición vertical.
-        table.padTop(200); // Añade relleno a la parte de arriba de la tabla, y ayuda a centrar los botones
+
+        table.padTop(200); // Añade relleno a la parte de arriba de la tabla(para centrar los botones)
         table.add(botonJugar).width(anchoBoton).height(altoBoton).pad(15);
         table.row(); // Siguiente fila
         table.add(botonMultijugador).width(anchoBoton).height(altoBoton).pad(15);
@@ -70,7 +70,7 @@ public class MenuScreen implements Screen {
         table.row();
         table.add(botonSalir).width(anchoBoton).height(altoBoton).pad(15);
 
-        // 3. Añadir Listeners para las acciones
+        // Añadir Listeners para las acciones
         botonJugar.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
@@ -138,13 +138,12 @@ public class MenuScreen implements Screen {
     public void dispose() {
         imagenFondo.dispose();
 
-        // 2. Liberar recursos que se inicializarán más adelante (verificando que no sean null)
+        // Liberar recursos que se inicializarán más adelante (verificando que no sean null)
         if (stage != null) {
             stage.dispose();
         }
         if (skin != null) {
             skin.dispose();
         }
-        // El 'batch' NO se libera porque pertenece a la clase MyGame (global).
     }
 }

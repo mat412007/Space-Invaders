@@ -140,8 +140,6 @@ public class AlienManager {
         }
     }
 
-
-
     // Llenamos el array de los aliens al empezar la partida
     public static void llenar(int alto, int ancho, Alien[] aliens, int espacio, Texture alien_img){
         int i = 0;

@@ -141,6 +141,13 @@ public class GameScreen implements Screen {
         nave_2.dispose();
         disparo.dispose();
         alien.dispose();
+
+        if (stage != null) {
+            stage.dispose();
+        }
+        if (skin != null) {
+            skin.dispose();
+        }
     }
 
     @Override public void show() {
