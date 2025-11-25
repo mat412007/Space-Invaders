@@ -1,8 +1,7 @@
-package com.space_invaders_server.lwjgl3;
+package com.space_invaders;
 
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3Application;
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3ApplicationConfiguration;
-import com.space_invaders.MyGame;
 
 /** Launches the desktop (LWJGL3) application. */
 public class Lwjgl3Launcher {
