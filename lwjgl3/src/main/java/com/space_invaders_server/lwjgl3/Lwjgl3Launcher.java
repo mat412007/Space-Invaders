@@ -1,4 +1,4 @@
-package com.space_invaders.lwjgl3;
+package com.space_invaders_server.lwjgl3;
 
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3Application;
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3ApplicationConfiguration;
