@@ -39,8 +39,8 @@ public class GameScreen implements Screen {
     private Texture nave_2;
     private Texture disparo;
     private Texture alien;
-    private Jugador jugador;
-    private Jugador2 jugador_2;
+    private Jugadores jugador;
+    private Jugadores jugador_2;
     private AlienManager alienManager;
 
     public GameScreen(final MyGame game, boolean multijugador) {
@@ -56,8 +56,8 @@ public class GameScreen implements Screen {
         nave_2 = new Texture("nave_2.png");
         disparo = new Texture("bala_2.png");
         alien = new Texture("alien_1.png");
-        jugador = new Jugador(nave, disparo);
-        jugador_2 = new Jugador2(nave_2, disparo);
+        jugador = new Jugadores(nave, disparo, 1);
+        jugador_2 = new Jugadores(nave_2, disparo, 2);
         int anchoAliens = 7;
         int altoAliens = 4;
         int espacioAliens = 80;
